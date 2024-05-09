@@ -43,7 +43,7 @@ const HomeScreen1 = () => {
       <SafeAreaView style={styles.container}>
         <View style={styles.centeredView}>
           <Animated.Image
-            source={require('../assets/logo.png')}
+            source={require('../assets/logo_black.png')}
             style={[
               styles.image,
               {
@@ -74,7 +74,7 @@ export default HomeScreen1;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#17191C',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
