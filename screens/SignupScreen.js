@@ -12,14 +12,27 @@ const SignupScreen = () => {
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
   const handleSignup = () => {
-    const isValidFormat = /\S+@\S+\.\S+/.test(email);
-    setIsValidEmail(isValidFormat);
-    if (isValidFormat) {
+    const hasSpaces = /\s/.test(email); // Check if email has spaces
+    const isValidFormat = /\S+@\S+\.\S+/.test(email); // Check if email format is valid
+    const validDomains = /\.(com|org|net|edu|gov)$/i; // List of valid domain extensions
+  
+    setIsValidEmail(
+      !hasSpaces &&
+      isValidFormat &&
+      validDomains.test(email.toLowerCase()) // Check if email ends with a valid domain
+    );
+  
+    if (!hasSpaces && isValidFormat && validDomains.test(email.toLowerCase())) {
       setIsButtonEnabled(true);
-      navigation.navigate('ExploreGenres'); // Navigate to ExploreGenres upon valid email and button enabled
+      navigation.navigate('ExploreGenres');
       // Implement your signup logic here
+    } else {
+      setIsButtonEnabled(false); // Disable the button if email has spaces, format is invalid, or domain is invalid
     }
   };
+  
+  
+  
 
 
   const handleForgotPassword = () => {
@@ -59,12 +72,16 @@ const SignupScreen = () => {
       )}
 
       <TouchableOpacity
-        style={[styles.ctabutton, email.trim().length === 0 ? styles.ctabuttonDisabled : null]}
-        onPress={handleSignup}
-        disabled={email.trim().length === 0}
-      >
-        <Text style={styles.ctaText}>Continue</Text>
-      </TouchableOpacity>
+  style={[
+    styles.ctabutton,
+    (email.trim().length === 0 || !isValidEmail) && styles.ctabuttonDisabled, // Check if button should be disabled
+  ]}
+  onPress={handleSignup}
+  disabled={email.trim().length === 0 || !isValidEmail} // Disable button based on conditions
+>
+  <Text style={styles.ctaText}>Continue</Text>
+</TouchableOpacity>
+
 
       
       <View style={styles.lineContainer}>
