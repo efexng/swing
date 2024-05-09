@@ -20,33 +20,22 @@ const ExploreGenres = () => {
   const genreData = [
     { id: 1, name: 'Action' },
     { id: 2, name: 'Comedy' },
-    { id: 3, name: 'Drama' },
+    { id: 3, name: 'Documentary' },
     { id: 4, name: 'Horror' },
     { id: 5, name: 'Sci-Fi' },
     { id: 6, name: 'Romance' },
     { id: 7, name: 'Thriller' },
     { id: 8, name: 'Fantasy' },
-    { id: 9, name: 'Documentary' },
+    { id: 9, name: 'Drama' },
     { id: 10, name: 'Animation' },
     { id: 11, name: 'Adventure' },
-    { id: 12, name: 'Mystery' },
-    { id: 13, name: 'Crime' },
+    { id: 12, name: 'Crime' },
+    { id: 13, name: 'Mystery' },
     { id: 14, name: 'Musical' },
     { id: 15, name: 'Western' },
     { id: 16, name: 'Biography' },
     { id: 17, name: 'Family' },
     { id: 18, name: 'History' },
-    { id: 19, name: 'Sport' },
-    { id: 20, name: 'War' },
-    { id: 21, name: 'Music' },
-    { id: 22, name: 'Fantasy-Adventure' },
-    { id: 23, name: 'Science Fiction-Fantasy' },
-    { id: 24, name: 'Superhero' },
-    { id: 25, name: 'Supernatural' },
-    { id: 26, name: 'Historical Fiction' },
-    { id: 27, name: 'Political' },
-    { id: 29, name: 'Educational' },
-    { id: 30, name: 'Experimental' },
   ];
 
   return (
@@ -63,7 +52,9 @@ const ExploreGenres = () => {
             ]}
             onPress={() => toggleGenre(genre.name)}
           >
-            <Text style={styles.genreText}>{genre.name}</Text>
+            <Text style={[styles.genreText, isGenreSelected(genre.name) && styles.selectedGenreText]}>
+              {genre.name}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -87,7 +78,7 @@ const ExploreGenres = () => {
             <Image source={require('../assets/location.png')} style={styles.location} />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Home');
+                navigation.navigate('HomeScreen');
                 setModalVisible(false);
               }}
             >
@@ -96,7 +87,7 @@ const ExploreGenres = () => {
             <View style={styles.hr} />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Home');
+                navigation.navigate('HomeScreen');
                 setModalVisible(false);
               }}
             >
@@ -142,25 +133,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    margin: 20,
+    marginHorizontal: 20,
+    alignItems: 'center', // Added alignItems property
   },
+  
   genreBox: {
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
     marginTop: 20,
-    width: 'auto',
+    minWidth: 100, // Minimum width for the genre box
+    maxWidth: '40%', // Maximum width as a percentage of the container
     height: 50,
     borderWidth: 1,
     borderColor: '#DCE1E5',
   },
+  
   genreText: {
     fontSize: 16,
   },
   selectedGenre: {
     borderWidth: 0,
     backgroundColor: '#5303FF',
+  },
+  selectedGenreText: {
+    color: '#fff', // White text color when selected
   },
   button: {
     backgroundColor: '#5303FF',

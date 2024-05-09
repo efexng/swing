@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 const SignupScreen = () => {
   const navigation = useNavigation(); // Initialize navigation
 
+  
   const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);

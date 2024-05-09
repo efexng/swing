@@ -1,12 +1,23 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+// OnBoardingScreen2.js
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Animated, Easing } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const OnBoardingScreen2 = () => {
   const navigation = useNavigation();
+  const animValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animValue, {
+      toValue: 1,
+      duration: 800,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, { opacity: animValue }]}>
       <View style={styles.centeredView}>
         <Image source={require('../assets/Onboarding_background2.png')} style={styles.image} />
         <View style={styles.overlay}></View>
@@ -16,11 +27,11 @@ const OnBoardingScreen2 = () => {
           <View style={[styles.paginationEllipse, styles.activeEllipse]}></View>
           <View style={styles.paginationEllipse}></View>
         </View>
-        <TouchableOpacity  onPress={() => navigation.navigate('OnBoardingScreen3')} style={styles.skipButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('OnBoardingScreen3')} style={styles.skipButton}>
           <Text style={styles.skipText}>Skip</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

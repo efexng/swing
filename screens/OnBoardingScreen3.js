@@ -1,13 +1,23 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+// OnBoardingScreen3.js
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Animated, Easing } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
 
 const OnBoardingScreen3 = () => {
   const navigation = useNavigation();
+  const animValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animValue, {
+      toValue: 1,
+      duration: 800,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, { opacity: animValue }]}>
       <View style={styles.centeredView}>
         <Image source={require('../assets/Onboarding_background3.png')} style={styles.image} />
         <View style={styles.overlay}></View>
@@ -17,14 +27,14 @@ const OnBoardingScreen3 = () => {
           <View style={styles.paginationEllipse}></View>
           <View style={[styles.paginationEllipse, styles.activeEllipse]}></View>
         </View>
-        <TouchableOpacity  onPress={() => navigation.navigate('SignupScreen')} style={[styles.skipButton, { backgroundColor: '#5303FF' }]}>
+        <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={[styles.skipButton, { backgroundColor: '#5303FF' }]}>
           <Text style={styles.skipText}>Get started</Text>
         </TouchableOpacity>
-        <TouchableOpacity  onPress={() => navigation.navigate('SignupScreen')} style={styles.signInButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={styles.signInButton}>
           <Text style={styles.signInText}>Sign in</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
