@@ -1,0 +1,54 @@
+ <View style={styles.videodetails}>
+              <Text style={styles.videodetailstext}>{video.title}</Text>
+              <Text style={styles.videodetailstext2}>{video.description}</Text>
+            </View>
+            <View style={styles.videocontrols}>
+            <TouchableOpacity onPress={() => toggleLike(video.id)}>
+            <Ionicons
+              name={isLiked[video.id] ? 'heart' : 'heart-outline'}
+              size={30}
+              color={isLiked[video.id] ? 'red' : '#fff'}
+            />
+            {likeCount[video.id] > 0 && (
+              <Text style={styles.likeCountText}>{formatLikeCount(likeCount[video.id])}</Text>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => toggleVolume(video.id)}>
+            <Ionicons
+              name={isVolumeMuted[video.id] ? 'volume-mute-outline' : 'volume-high-outline'}
+              size={30}
+              color="#fff"
+            />
+          </TouchableOpacity>
+
+
+              <TouchableOpacity onPress={toggleModal}>
+                <Ionicons
+                  name="ellipsis-vertical-outline"
+                  size={30}
+                  color="#fff"
+                />
+              </TouchableOpacity>
+
+            </View>
+
+
+
+             <View style={styles.controlsContainer}>
+              <TouchableOpacity
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  if (isPlaying[index]) {
+                    players[index].pause();
+                  } else {
+                    players[index].play();
+                  }
+                  setIsPlaying(prevState => ({ ...prevState, [index]: !prevState[index] }));
+                }}
+              />
+            </View>
