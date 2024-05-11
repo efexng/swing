@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
 import { useVideoPlayer, VideoView } from 'expo-video';
 import styles from './HomeScreenStyle';
 
@@ -48,6 +48,13 @@ const videoData = [
     description: 'In Cinemas on January 19',
     header: 'Netflix',
   },
+  {
+    id: 7,
+    source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715373759/etsxpjmodymbmnngp4ip.mp4',
+    title: 'BEETLEJUICE BEETLEJUICE _ Official Teaser Trailer',
+    description: 'In Cinemas on January 19',
+    header: 'Cinema',
+  },
 ];
 
 const HomeScreen = () => {
@@ -65,7 +72,7 @@ const HomeScreen = () => {
 
   const players = videoData.map(video =>
     useVideoPlayer(video.source, player => {
-      player.loop = false;
+      player.loop = true;
       player.play();
       setLikeCount(prevState => ({ ...prevState, [video.id]: 0 }));
       setIsPlaying(prevState => ({ ...prevState, [video.id]: true }));
@@ -78,6 +85,34 @@ const HomeScreen = () => {
     // Pause all videos except the first one initially
     pauseAllExcept(0);
   }, []);
+
+  const pauseAllVideos = () => {
+    players.forEach(player => player.pause());
+    setIsPlaying(prevState => {
+      const updatedState = {};
+      Object.keys(prevState).forEach(key => {
+        updatedState[key] = false;
+      });
+      return updatedState;
+    });
+  };
+
+  const playFirstVideoOnFocus = () => {
+    setActiveHeader('Cinema'); // Set active header to "Cinema"
+    playFirstVideoOnHeaderChange('Cinema');
+  };
+  
+
+  // useFocusEffect hook to play the first video when screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      playFirstVideoOnFocus();
+      return () => {
+        pauseAllVideos();
+      };
+    }, [])
+  );
+
 
   const pauseAllExcept = index => {
     if (index >= 0 && index < players.length) {
@@ -106,11 +141,13 @@ const HomeScreen = () => {
   const handleScroll = event => {
     const contentOffsetY = event.nativeEvent.contentOffset.y;
     const index = Math.round(contentOffsetY / 790);
+    const videosUnderHeader = videoData.filter(video => video.header === activeHeader);
   
-    if (index !== currentVideoIndex) {
+    if (index >= 0 && index < videosUnderHeader.length && videosUnderHeader[index].id - 1 !== currentVideoIndex) {
       playVideoUnderHeader(activeHeader, index);
     }
   };
+  
   
 
   
@@ -177,12 +214,12 @@ const HomeScreen = () => {
         onScroll={handleScroll}
       >
         {videoData.map((video, index) => (
-          <View key={video.id} style={styles.videocontainer}>
+          <View key={video.id} >
             {video.header === activeHeader && (
-              <View style={{ backgroundColor: 'black', borderRadius: 5 }}>
+              <View style={{ backgroundColor: 'black', borderRadius: 10 , marginBottom: 5,}}>
                 <VideoView
                   ref={ref}
-                  style={{ height: 790, borderRadius: 10 }}
+                  style={{ height: 790, borderRadius: 10,}}
                   player={players[index]}
                   contentFit="cover"
                   contentPosition="center"
@@ -252,17 +289,20 @@ const HomeScreen = () => {
 
       <View style={styles.headercontainer}>
         <Text style={styles.headertitle}>What's Coming</Text>
-        <ScrollView horizontal={true} style={styles.headerScrollView}>
+        <ScrollView horizontal={true} style={styles.headerScrollView}     showsHorizontalScrollIndicator={false} >
           {['Cinema', 'Netflix', 'HBO', 'Disney +', 'Showmax', 'Apple Tv'].map(headerText => (
             <TouchableOpacity
               key={headerText}
-              style={[styles.headercontents, activeHeader === headerText && styles.activeHeader]}
+              style={[
+                styles.headercontents,
+                activeHeader === headerText && styles.activeHeader,
+              ]}
               onPress={() => {
                 setActiveHeader(headerText);
                 playFirstVideoOnHeaderChange(headerText);
               }}
             >
-              <Text>{headerText}</Text>
+              <Text style={{ color: '#fff',     fontSize: 15, }}>{headerText}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>

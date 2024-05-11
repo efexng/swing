@@ -54,10 +54,6 @@ const styles = StyleSheet.create({
   videoScrollView: {
     width: '100%',
   },
-  videocontainer: {
-    marginBottom: 5, // Adjust as needed
-    
-  },
   videocontrols: {
     position: 'absolute',
     bottom: 100,
@@ -167,6 +163,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 60,
     flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: 30,
     alignItems: 'center',
     width: 400,
@@ -178,9 +176,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headercontents: {
-    color: '#fff',
     margin: 10,
-    fontSize: 21,
   },
   controlsContainer: {
     position: 'absolute',
@@ -194,8 +190,7 @@ const styles = StyleSheet.create({
   },
   activeHeader: {
     borderBottomWidth: 2,
-    borderBottomColor: '#5303FF',
-    color: '#fff',
+    borderBottomColor: '#fff',
   },
 });
 
