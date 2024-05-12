@@ -96,6 +96,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
   },
+  outerCirclecontainer: {
+    position: 'absolute',
+    bottom: -10,
+    right: 0,
+    flexDirection: 'column', // Changed to column layout
+    alignItems: 'flex-end', // Aligned to the bottom right
+    marginRight: 10, // Added margin for spacing
+  },
   outerCircle: {
     position: 'absolute',
     bottom: 140,
@@ -131,7 +139,7 @@ const styles = StyleSheet.create({
     bottom: -10,
     right: -6,
   },
-  notification: {
+  notificationContainer: {
     position: 'absolute',
     top: 60,
     right: 0,
@@ -143,6 +151,18 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: 'white',
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notification: {
+    position: 'absolute',
+    flexDirection: 'column', // Changed to column layout
+    alignItems: 'flex-end', // Aligned to the bottom right
+    marginRight: 10, // Added margin for spacing
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    borderColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -205,4 +225,5 @@ const styles = StyleSheet.create({
 });
 
 export default styles;
+
 

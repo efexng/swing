@@ -14,6 +14,8 @@ import HomeScreen from './screens/HomeScreen';
 import MoreScreen from './screens/MoreScreen';
 import SavedScreen from './screens/SavedScreen';
 import CinemaScreen from './screens/CinemaScreen';
+import UploadScreen from './screens/UploadScreen';
+import NotificationScreen from './screens/NotificationScreen';
 
 enableScreens();
 
@@ -40,6 +42,8 @@ export default function App() {
         <Stack.Screen name='CinemaScreen' component={CinemaScreen} />
         <Stack.Screen name='SavedScreen' component={SavedScreen} />
         <Stack.Screen name='MoreScreen' component={MoreScreen} />
+        <Stack.Screen name='UploadScreen' component={UploadScreen} />
+        <Stack.Screen name='NotificationScreen' component={NotificationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

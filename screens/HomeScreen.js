@@ -352,10 +352,12 @@ export default function HomeScreen() {
 
 
 
-      <View style={styles.notification}>
+     <TouchableOpacity style={styles.notificationContainer} onPress={() => navigation.navigate('NotificationScreen')}>
+     <View style={styles.notification}>
         <View style={styles.notificationtinyCircle} />
         <Ionicons name="notifications-outline" size={30} color="#17161A" />
       </View>
+     </TouchableOpacity>
 
       <Modal
         animationType="fade"
@@ -384,11 +386,14 @@ export default function HomeScreen() {
         </View>
       </Modal>
 
+      <TouchableOpacity style={styles.outerCirclecontainer} onPress={() => navigation.navigate('UploadScreen')}>
       <View style={styles.outerCircle}>
         <View style={styles.innerCircle}>
           <View style={styles.tinyCircle} />
         </View>
       </View>
+    </TouchableOpacity>
+
 
 
 
