@@ -3,9 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'center', 
+    justifyContent: 'center', 
     backgroundColor: 'gray',
   },
   bottomContainer: {
@@ -192,6 +191,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: '#fff',
   },
+  progressBarContainer: {
+    width: '80%', // Adjusted width for the progress bar
+    height: 5, // Height of the progress bar
+    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark transparent background
+    position: 'absolute',
+    bottom: 40,
+    left: '3%', // Center the progress bar horizontally
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  
 });
 
 export default styles;
+
