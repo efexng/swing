@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -172,7 +172,7 @@ const UploadScreen = () => {
 
 
           {mediaList.length > 0 && (
-            <TouchableOpacity onPress={() => { /* Your logic here */ }} style={styles.ctabutton}>
+            <TouchableOpacity onPress={() => navigation.navigate('UploadScreenExtract')} style={styles.ctabutton}>
               <Text style={styles.ctaText}>Continue</Text>
             </TouchableOpacity>
           )}
@@ -188,11 +188,14 @@ const UploadScreen = () => {
       {/* End of UploadBoxContainer */}
 
       {/* Circles */}
-      <View style={styles.outerCircle}>
-        <View style={styles.innerCircle}>
-          <View style={styles.tinyCircle} />
+      
+      {mediaList.length < 1 && (
+        <View style={styles.outerCircle}>
+          <View style={styles.innerCircle}>
+            <View style={styles.tinyCircle} />
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };

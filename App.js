@@ -16,6 +16,7 @@ import SavedScreen from './screens/SavedScreen';
 import CinemaScreen from './screens/CinemaScreen';
 import UploadScreen from './screens/UploadScreen';
 import NotificationScreen from './screens/NotificationScreen';
+import UploadScreenExtract from './screens/UploadScreenExtract';
 
 enableScreens();
 
@@ -30,6 +31,8 @@ export default function App() {
           animationEnabled: false, // Disable transition animation
         }}
       >
+              <Stack.Screen name='UploadScreenExtract' component={UploadScreenExtract} />
+
         <Stack.Screen name='HomeScreen' component={HomeScreen} />
 
         <Stack.Screen name='HomeScreen1' component={HomeScreen1} />
