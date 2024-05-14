@@ -2,6 +2,48 @@ import React, { useState, } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
+
+
+
+
+
+const notifications = [
+    {
+        date: '06/05/2024',
+        notifications: [
+            {
+                logoText: 'G',
+                company: 'Genesis Cinema',
+                message: 'Enjoy non-stop happiness with our selected up to date movie collections curated just for you and ...',
+                time: '11:50 AM',
+                type: 'unread',
+            },
+            {
+                logoText: 'G',
+                company: 'Genesis Cinema',
+                message: 'Enjoy non-stop happiness with our selected up to date movie collections curated just for you and ...',
+                time: '11:50 AM',
+                type: 'unread',
+            },
+        ]
+    },
+    {
+        date: '07/05/2024',
+        notifications: [
+            {
+                logoText: 'A',
+                company: 'Genesis Cinema',
+                message: 'Enjoy non-stop happiness with our selected up to date movie collections curated just for you and ...',
+                time: '11:50 AM',
+                type: 'read',
+            },
+        ]
+    },
+];
+
+
+
 
 
 const NotificationScreen = () => {
@@ -19,15 +61,24 @@ const NotificationScreen = () => {
         setActiveSection('All'); // Set state to 'All' when All section is pressed
     };
 
-    const truncateText = (text, maxLength) => {
-        if (text.length > maxLength) {
-            return `${text.substring(0, maxLength)}...`;
-        }
-        return text;
-    };
+    const filteredNotifications = showUnread
+    ? notifications.filter(notification => notification.type === 'unread')
+    : notifications;
+
+
+
+const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return `${text.substring(0, maxLength)}...`;
+    }
+    return text;
+};
+
+    
 
     return (
         <SafeAreaView style={styles.container}>
+        
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons style={styles.back} name="arrow-back" size={20} color="black" />
@@ -60,31 +111,49 @@ const NotificationScreen = () => {
                     </View>
                 </TouchableOpacity>
             </View>
-            <View style={styles.notificationbox}>
-                <Text>20/ 02/ 2024</Text>
-                <View style={styles.notificationboxcontent}>
-                <View style={styles.notificationlogo}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                    <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#808080', borderRadius: '20', width: 30, height: 30,}}>
-                    <Text style={{fontWeight: '900', color: '#fff', fontSize: 20,}}>G</Text>
-                    </View>
-                    <Text style={styles.notificationboxmsgtext}>Genesis Cinema</Text>
-                </View>
-                    <Ionicons name="ellipsis-horizontal-outline" size={24} color="#56545C" />
-                </View>
-                <View style={styles.notificationboxmsg}>
-                <Text style={styles.notificationboxmsgtextbottom}>
-                            {truncateText(
-                                'Enjoy non-stop happiness with our selected up to date movie collections curated just for you and ...',
-                                100
-                            )}
-                        </Text>         
-                               </View>
-                <View style={styles.notificationboxtime}>
-                <Text style={styles.notificationboxmsgtime}>11:50 AM</Text>
-                </View>
+
+            <ScrollView>
+    {notifications.map((dailyNotifications, index) => {
+        const unreadNotifications = dailyNotifications.notifications.filter(notification => notification.type === 'unread');
+        if (showUnread && unreadNotifications.length === 0) {
+            return null; 
+        }
+
+        return (
+            <View key={index} style={styles.notificationbox}>
+                <Text>{dailyNotifications.date}</Text>
+                {dailyNotifications.notifications
+                    .filter(notification => !showUnread || notification.type === 'unread')
+                    .map((notification, innerIndex) => (
+                        <View key={innerIndex} style={styles.notificationboxcontent}>
+                            <View style={styles.notificationlogo}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                    <View style={styles.logoCircle}>
+                                        <Text style={styles.logoText}>{notification.logoText}</Text>
+                                    </View>
+                                    <Text style={notification.type === 'unread' ? styles.notificationboxmsgtextunread : styles.notificationboxmsgtext}>
+                                        {notification.company}
+                                    </Text>
+                                </View>
+                                <Ionicons name="ellipsis-horizontal-outline" size={24} color="#56545C" />
+                            </View>
+                            <View style={styles.notificationboxmsg}>
+                                <Text style={styles.notificationboxmsgtextbottom}>
+                                    {truncateText(notification.message, 100)}
+                                </Text>
+                            </View>
+                            <View style={styles.notificationboxtime}>
+                                <Text style={styles.notificationboxmsgtime}>{notification.time}</Text>
+                            </View>
+                        </View>
+                    ))}
             </View>
-            </View>
+        );
+    })}
+</ScrollView>
+
+
+            
         </SafeAreaView>
     );
 };
@@ -109,11 +178,10 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     separator: {
-        borderBottomWidth: 1,
+        borderBottomWidth: .5,
         borderBottomColor: 'gray',
         width: '100%',
         alignSelf: 'center',
-        marginTop: 16,
     },
     statusContainer: {
         marginTop: 16,
@@ -172,6 +240,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 20,
     },
     notificationboxcontent: {
         flexDirection: 'column',
@@ -186,33 +255,60 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
     },
+    notificationlogo2: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: 5,
+        marginTop: 15,
+    },
     notificationboxmsg: {
         marginLeft: 45,
         width: 280,
         height: 29,
-      },
-      notificationboxmsgtext: {
+    },
+    notificationboxmsgtext: {
         fontSize: 16,
         fontWeight: '600',
         marginLeft: 10,
-      },
-      notificationboxmsgtextbottom: {
+        color: 'gray', 
+    },
+    notificationboxmsgtextunread: {
+        fontSize: 16,
+        fontWeight: '600',
+        marginLeft: 10,
+        color: 'black', 
+    },    
+    notificationboxmsgtextbottom: {
         fontSize: 12,
         fontWeight: '400',
-      },
-      notificationboxtime: {
+    },
+    notificationboxtime: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         margin: 5,
         color: 'gray',
-      },
-      notificationboxmsgtime: {
+    },
+    notificationboxmsgtime: {
         fontSize: 12,
         fontWeight: '400',
         marginLeft: 10,
         color: 'gray',
-      },
+    },
+    logoText: {
+        fontWeight: '900',
+        color: '#fff',
+        fontSize: 20, 
+    },
+    logoCircle: {
+        alignItems: 'center', 
+        justifyContent: 'center',
+        backgroundColor: '#808080',
+        borderRadius: '20', 
+        width: 30, 
+        height: 30, 
+    },
 });
 
 export default NotificationScreen;

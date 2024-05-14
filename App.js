@@ -30,6 +30,7 @@ export default function App() {
           animationEnabled: false, // Disable transition animation
         }}
       >
+        <Stack.Screen name='HomeScreen' component={HomeScreen} />
 
         <Stack.Screen name='HomeScreen1' component={HomeScreen1} />
         <Stack.Screen name='HomeScreen2' component={HomeScreen2} />
@@ -38,7 +39,6 @@ export default function App() {
         <Stack.Screen name='OnBoardingScreen3' component={OnBoardingScreen3} />
         <Stack.Screen name='SignupScreen' component={SignupScreen} />
         <Stack.Screen name='ExploreGenres' component={ExploreGenres} />
-        <Stack.Screen name='HomeScreen' component={HomeScreen} />
         <Stack.Screen name='CinemaScreen' component={CinemaScreen} />
         <Stack.Screen name='SavedScreen' component={SavedScreen} />
         <Stack.Screen name='MoreScreen' component={MoreScreen} />
