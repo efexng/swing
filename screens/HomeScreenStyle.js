@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column', // Changed to column layout
     alignItems: 'flex-end', // Aligned to the bottom right
     marginRight: 10, // Added margin for spacing
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderRadius: 100,
     borderColor: 'white',
     backgroundColor: '#fff',
@@ -172,15 +172,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   notificationtinyCircle: {
-    width: 15,
-    height: 15,
+    width: 10,
+    height: 10,
     borderRadius: 100,
     backgroundColor: '#5303FF',
     borderWidth: 2,
     borderColor: 'white',
     position: 'absolute',
-    top: 15,
-    right: 13,
+    top: 18,
+    right: 19,
     zIndex: 1,
   },
   headercontainer: {

@@ -4,7 +4,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
 import styles from './HomeScreenStyle';
-import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon,ModalIcon } from './icons';
+import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon, NotificationIcon } from './icons';
 import { useFonts, Outfit_100Thin, Outfit_200ExtraLight, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold, Outfit_800ExtraBold, Outfit_900Black } from '@expo-google-fonts/outfit';
 
 const videoData = [
@@ -325,7 +325,7 @@ export default function HomeScreen() {
                   <TouchableOpacity onPress={toggleModal}>
                     <Ionicons
                       name="ellipsis-vertical-outline"
-                      size={30}
+                      size={24}
                       color="#fff"
                     />
                   </TouchableOpacity>
@@ -363,7 +363,7 @@ export default function HomeScreen() {
      <TouchableOpacity style={styles.notificationContainer} onPress={() => navigation.navigate('NotificationScreen')}>
      <View style={styles.notification}>
         <View style={styles.notificationtinyCircle} />
-        <Ionicons name="notifications-outline" size={30} color="#17161A" />
+        <Ionicons name="notifications-outline" size={24} color="#17161A" />
       </View>
      </TouchableOpacity>
 
