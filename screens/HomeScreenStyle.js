@@ -22,17 +22,21 @@ const styles = StyleSheet.create({
   },
   iconText: {
     color: '#17161A',
-    marginTop: 5,
+    fontFamily: 'Outfit_400Regular',
+    fontSize: 14,
+    lineHeight: 16.8
   },
   iconTextHome: {
     color: '#5303FF',
-    marginTop: 5,
+    fontFamily: 'Outfit_600SemiBold',
+    fontSize: 14,
+    lineHeight: 16.8
   },
   videodetails: {
     position: 'absolute',
-    bottom: 100,
+    bottom: 70,
     left: 0,
-    gap: 10,
+    gap: 12,
     color: 'white',
     flexDirection: 'column', // Changed to column layout
     alignItems: 'flex-start', // Aligned to the bottom right
@@ -43,12 +47,15 @@ const styles = StyleSheet.create({
   videodetailstext: {
     color: 'white',
     fontSize: 20,
-    fontWeight: 'bold',
+    width: 298,
+    lineHeight: 24,
+    fontFamily: 'Outfit_600SemiBold'
   },
   videodetailstext2: {
     color: 'white',
-    fontSize: 20,
-    fontWeight: 'semi-bold',
+    fontSize: 18,
+    fontFamily: 'Outfit_400Regular',
+    lineHeight: 19.2,
   },
   videoScrollView: {
     width: '100%',
@@ -111,10 +118,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column', // Changed to column layout
     alignItems: 'flex-end', // Aligned to the bottom right
     marginRight: 10, // Added margin for spacing
-    width: 80,
-    height: 80,
+    width: 62,
+    height: 62,
     borderRadius: 100,
-    borderWidth: 6,
+    borderWidth: 4,
     borderColor: 'white',
     backgroundColor: '#5303FF',
     justifyContent: 'center',
@@ -130,14 +137,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tinyCircle: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: 'white',
     position: 'absolute',
-    bottom: -10,
-    right: -6,
+    top: 15.29,
+    left: 15.41, 
+    width: 8.43,
+    height: 8.43,
+    border: 1.43
   },
   notificationContainer: {
     position: 'absolute',
@@ -184,18 +189,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 30,
+    gap: 20,
     alignItems: 'center',
     width: 400,
     margin: 30,
   },
   headertitle: {
     color: '#fff',
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
+    fontFamily: 'Outfit_600SemiBold',
+    fontSize: 20,
+    },
   headercontents: {
     margin: 10,
+    fontFamily: 'Outfit_700Bold',
+    fontSize: 14,
+    textTransform: 'uppercase',
   },
   controlsContainer: {
     position: 'absolute',
@@ -217,7 +225,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.3)', // Dark transparent background
     position: 'absolute',
     bottom: 40,
-    left: '3%', // Center the progress bar horizontally
+    marginLeft: 20,
     borderRadius: 4,
     overflow: 'hidden',
   },

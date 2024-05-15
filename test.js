@@ -1,49 +1,35 @@
-import Animated, {
-    useSharedValue,
-    withTiming,
-    useAnimatedStyle,
-    Easing,
-  } from 'react-native-reanimated';
-  import { View, Button, StyleSheet } from 'react-native';
-  
-  export default function AnimatedStyleUpdateExample() {
-    const randomWidth = useSharedValue(10);
-  
-    const config = {
-      duration: 500,
-      easing: Easing.bezier(0.5, 0.01, 0, 1),
-    };
-  
-    const style = useAnimatedStyle(() => {
-      return {
-        width: withTiming(randomWidth.value, config),
-      };
-    });
-  
+import React from 'react';
+import { Text, View } from 'react-native';
+import { useFonts, Outfit_100Thin, Outfit_200ExtraLight, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold, Outfit_800ExtraBold, Outfit_900Black } from '@expo-google-fonts/outfit';
+
+export default () => {
+  let [fontsLoaded] = useFonts({
+    Outfit_100Thin,
+    Outfit_200ExtraLight,
+    Outfit_300Light,
+    Outfit_400Regular,
+    Outfit_500Medium,
+    Outfit_600SemiBold,
+    Outfit_700Bold,
+    Outfit_800ExtraBold,
+    Outfit_900Black,
+  });
+
+  if (!fontsLoaded) {
+    return null; // Or return a loading indicator if needed
+  } else {
     return (
-      <View style={styles.container}>
-        <Animated.View style={[styles.box, style]} />
-        <Button
-          title="toggle"
-          onPress={() => {
-            randomWidth.value = Math.random() * 350;
-          }}
-        />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontFamily: 'Outfit_100Thin' }}>Outfit Thin</Text>
+        <Text style={{ fontFamily: 'Outfit_200ExtraLight' }}>Outfit Extra Light</Text>
+        <Text style={{ fontFamily: 'Outfit_300Light' }}>Outfit Light</Text>
+        <Text style={{ fontFamily: 'Outfit_400Regular' }}>Outfit Regular</Text>
+        <Text style={{ fontFamily: 'Outfit_500Medium' }}>Outfit Medium</Text>
+        <Text style={{ fontFamily: 'Outfit_600SemiBold' }}>Outfit Semi Bold</Text>
+        <Text style={{ fontFamily: 'Outfit_700Bold' }}>Outfit Bold</Text>
+        <Text style={{ fontFamily: 'Outfit_800ExtraBold' }}>Outfit Extra Bold</Text>
+        <Text style={{ fontFamily: 'Outfit_900Black' }}>Outfit Black</Text>
       </View>
     );
   }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    box: {
-      width: 100,
-      height: 80,
-      backgroundColor: 'black',
-      margin: 30,
-    },
-  });
-  
+};

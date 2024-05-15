@@ -72,6 +72,10 @@ const UploadScreen = () => {
 
     animateSequence();
 
+    const timeout = setTimeout(() => {
+        navigation.navigate('UploadScreenExtractMatch'); // Replace 'UploadScreenExtractError' with your actual screen name
+      }, 10000);
+  
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -123,7 +127,7 @@ const styles = StyleSheet.create({
   },
   circle: {
     width: 40,
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     marginHorizontal: 5,
     zIndex: 2,
   },

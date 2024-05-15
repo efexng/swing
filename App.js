@@ -17,6 +17,8 @@ import CinemaScreen from './screens/CinemaScreen';
 import UploadScreen from './screens/UploadScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import UploadScreenExtract from './screens/UploadScreenExtract';
+import UploadScreenExtractError from './screens/UploadScreenExtractError';
+import UploadScreenExtractMatch from './screens/UploadScreenExtractMatch';
 
 enableScreens();
 
@@ -31,8 +33,6 @@ export default function App() {
           animationEnabled: false, // Disable transition animation
         }}
       >
-              <Stack.Screen name='UploadScreenExtract' component={UploadScreenExtract} />
-
         <Stack.Screen name='HomeScreen' component={HomeScreen} />
 
         <Stack.Screen name='HomeScreen1' component={HomeScreen1} />
@@ -47,6 +47,11 @@ export default function App() {
         <Stack.Screen name='MoreScreen' component={MoreScreen} />
         <Stack.Screen name='UploadScreen' component={UploadScreen} />
         <Stack.Screen name='NotificationScreen' component={NotificationScreen} />
+        <Stack.Screen name='UploadScreenExtract' component={UploadScreenExtract} />
+        <Stack.Screen name='UploadScreenExtractError' component={UploadScreenExtractError} />
+        <Stack.Screen name='UploadScreenExtractMatch' component={UploadScreenExtractMatch} />
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );

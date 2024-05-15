@@ -158,6 +158,9 @@ const truncateText = (text, maxLength) => {
     );
 };
 
+
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

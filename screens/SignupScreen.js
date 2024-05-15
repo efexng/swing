@@ -87,6 +87,7 @@ const SignupScreen = () => {
       
       <View style={styles.lineContainer}>
         <View style={styles.line}></View>
+
         <Text style={styles.orText}>or</Text>
         <View style={styles.line}></View>
       </View>

@@ -4,6 +4,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
 import styles from './HomeScreenStyle';
+import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon,ModalIcon } from './icons';
+import { useFonts, Outfit_100Thin, Outfit_200ExtraLight, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold, Outfit_800ExtraBold, Outfit_900Black } from '@expo-google-fonts/outfit';
 
 const videoData = [
   {
@@ -63,6 +65,7 @@ const videoData = [
     header: 'Disney +',
   },
 ];
+
 
 
 
@@ -252,7 +255,21 @@ export default function HomeScreen() {
     setIsModalVisible(!isModalVisible);
   };
 
-  
+  let [fontsLoaded] = useFonts({
+    Outfit_100Thin,
+    Outfit_200ExtraLight,
+    Outfit_300Light,
+    Outfit_400Regular,
+    Outfit_500Medium,
+    Outfit_600SemiBold,
+    Outfit_700Bold,
+    Outfit_800ExtraBold,
+    Outfit_900Black,
+  });
+
+  if (!fontsLoaded) {
+    return null; 
+  } else {
 
   return (
     <View style={styles.container}>
@@ -267,7 +284,7 @@ export default function HomeScreen() {
           .filter((item) => item.header === activeHeader) // Filter videos based on activeHeader
           .map((item, index) => (
             <View key={item.id}>
-              <View style={{ backgroundColor: 'black', borderRadius: 10, marginBottom: 5 }}>
+              <View style={{ backgroundColor: 'black', borderRadius: 10, marginBottom: 5, }}>
                 <Video
                   ref={(ref) => (videos.current[index] = ref)}
                   style={{ height: 790, borderRadius: 10 }}
@@ -296,22 +313,14 @@ export default function HomeScreen() {
                   <Text style={styles.videodetailstext2}>{item.description}</Text>
                 </View>
                 <View style={styles.videocontrols}>
-                  <TouchableOpacity onPress={() => toggleLike(item.id)}>
-                    <Ionicons
-                      name={videoStates[item.id]?.isLiked ? 'heart' : 'heart-outline'}
-                      size={30}
-                      color={videoStates[item.id]?.isLiked ? 'red' : '#fff'}
-                    />
+                <TouchableOpacity onPress={() => toggleLike(item.id)}>
+                    {videoStates[item.id]?.isLiked ? <HeartFillIcon /> : <HeartIcon />}
                     {likeCount[item.id] > 0 && (
                       <Text style={styles.likeCountText}>{formatLikeCount(likeCount[item.id])}</Text>
                     )}
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => toggleMute(item.id)}>
-                    <Ionicons
-                      name={videoStates[item.id]?.isMuted ? 'volume-mute-outline' : 'volume-high-outline'}
-                      size={30}
-                      color="#fff"
-                    />
+                    {videoStates[item.id]?.isMuted ? <VolumeSlashIcon /> : <VolumeIcon />}
                   </TouchableOpacity>
                   <TouchableOpacity onPress={toggleModal}>
                     <Ionicons
@@ -332,22 +341,21 @@ export default function HomeScreen() {
       <View style={styles.headercontainer}>
         <Text style={styles.headertitle}>What's Coming</Text>
         <ScrollView horizontal={true} style={styles.headerScrollView} showsHorizontalScrollIndicator={false} >
-          {['Cinema', 'Netflix', 'HBO', 'Disney +', 'Showmax', 'Apple Tv'].map(headerText => (
-            <TouchableOpacity
-              key={headerText}
-              style={[
-                styles.headercontents,
-                activeHeader === headerText && styles.activeHeader,
-              ]}
-              onPress={() => {
-                setActiveHeader(headerText); // Set the activeHeader when a header is pressed
-              }}
-            >
-              <Text style={{ color: '#fff', fontSize: 15 }}>{headerText}</Text>
-            </TouchableOpacity>
-
-          ))}
-        </ScrollView>
+        {['Cinema', 'Netflix', 'HBO', 'Disney +', 'Showmax', 'Apple Tv'].map(headerText => (
+          <TouchableOpacity
+            key={headerText}
+            style={[
+              styles.headercontents,
+              activeHeader === headerText && styles.activeHeader,
+            ]}
+            onPress={() => {
+              setActiveHeader(headerText); // Set the activeHeader when a header is pressed
+            }}
+          >
+            <Text style={[styles.headerText, { color: '#fff' }]}>{headerText.toUpperCase()}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
       </View>
 
 
@@ -389,34 +397,35 @@ export default function HomeScreen() {
       <TouchableOpacity style={styles.outerCirclecontainer} onPress={() => navigation.navigate('UploadScreen')}>
       <View style={styles.outerCircle}>
         <View style={styles.innerCircle}>
-          <View style={styles.tinyCircle} />
-        </View>
+        <View style={styles.tinyCircle}>
+      <TinyCircleIcon />
+    </View>
+          </View>
       </View>
     </TouchableOpacity>
 
 
 
 
-
       <View style={styles.bottomContainer}>
         <TouchableOpacity style={styles.iconContainer}>
-          <Ionicons name="home" size={30} color="#5303FF" />
+          <HomeIcon />
           <Text style={styles.iconTextHome}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('CinemaScreen')} style={styles.iconContainer}>
-          <Ionicons name="film-outline" size={30} color="#17161A" />
+        <CinemaIcon />
           <Text style={styles.iconText}>Cinema</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SavedScreen')} style={styles.iconContainer}>
-          <Ionicons name="bookmark-outline" size={30} color="#17161A" />
+         <SavedIcon />
           <Text style={styles.iconText}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MoreScreen')} style={styles.iconContainer}>
-          <Ionicons name="ellipsis-horizontal-outline" size={30} color="#17161A" />
+        <MoreIcon />
           <Text style={styles.iconText}>More</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-
+}
