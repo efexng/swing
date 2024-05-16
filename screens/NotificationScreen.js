@@ -4,60 +4,86 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from './NotificationStyle';
-import { BackIcon} from './icons';
-
-
-
+import { BackIcon, EllipseHorizontalIcon } from './icons';
 
 const notifications = [
     {
-        date: '06/05/2024',
+        date: 'Today',
         notifications: [
             {
-                image: require('../assets/genesis-icon.png'), 
-                images: [
-                    require('../assets/if.png'),
-                    require('../assets/mad-max.png'),
-                    require('../assets/bad-boys.png'),
+                image: require('../assets/genesis-icon.png'),
+                contentimages: [
+                    {
+                        source: require('../assets/if.png'),
+                        title: 'IF',
+                        date: 'May 17, 2024',
+                        Genre: 'Comedy, drama, Family',
+                        Actor: 'Cailey Fleming, Emily Blunt, John Krasinski'
+                    },
+                    {
+                        source: require('../assets/mad-max.png'),
+                        title: 'FURIOSA: A MAD MAX SAGA',
+                        date: 'May 24, 2024',
+                        Genre: 'Action, Adventure, Sci-Fi,',
+                        Actor: 'Angus Sampson, Anya Taylor-Joy, Chris Hemsworth'
+                    },
+                    {
+                        source: require('../assets/bad-boys.png'),
+                        title: 'BAD BOYS RIDE OR DIE',
+                        date: 'June 5, 2024',
+                        Genre: 'Comedy, Action, Thriller',
+                        Actor: 'Will Smith, Martin Lawrence, Paola Núñez'
+                    },
                 ],
                 company: 'Genesis Cinema',
-                message: 'Enjoy non-stop happiness with our selected up to date movie collections curated just f...',
+                title: 'Step into a World of Cinematic Magic: Discover Our Latest Blockbusters!',
+                message: 'Enjoy non-stop happiness with our selected up to date movie collections curated just for Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
                 time: '11:50 AM',
                 type: 'unread',
+                date: '16/05/2024',
             },
             {
-                image: require('../assets/genesis-icon.png'), 
+                image: require('../assets/genesis-icon.png'),
                 company: 'Genesis Cinema',
-                message: 'Enjoy non-stop happiness with our selected up to date movie collections curated just for you and ...',
+                title: 'Step into a World of Cinematic Magic: Discover Our Latest Blockbusters!',
+                message: 'Enjoy non-stop happiness with our selected up to date movie collections curated just for Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
                 time: '11:50 AM',
                 type: 'unread',
+                date: '16/05/2024'
             },
         ]
     },
     {
-        date: '07/05/2024',
+        date: 'Last Week',
         notifications: [
             {
-                image: require('../assets/Netflix-icon.png'), 
+                image: require('../assets/Netflix-icon.png'),
                 company: 'Netflix',
+                title: 'DEAL ALERT! Netflix Premium Limited Time Offer, starts on May 22.',
                 message: 'The unbeatable offer of the summer: Netflix Premium for just $1.99/month for 3 months, starts on May 20.',
-                time: '11:50 AM',
+                time: '11:59 AM',
                 type: 'read',
+                date: '16/05/2024'
             },
             {
-                image: require('../assets/primevideo-icon.png'), 
+                image: require('../assets/primevideo-icon.png'),
+                contentimages: [
+                    {
+                        source: require('../assets/thboys-s4.png'),
+                        text: 'Watch The Boys Season 4 - Official Trailer',
+                        trailer: 'https://youtu.be/EzFXDvC-EwM'
+                    },
+                ],
                 company: 'Prime Video',
-                message: 'The highly anticipated fourth season of the Emmy-nominated hit drama series The Boys will premiere on Prime Video on June 13. ',
+                title: 'The Boys: Season 4 Premiere Date Announced for June 13 on Prime Video',
+                message: 'The highly anticipated fourth season of the Emmy-nominated hit drama series The Boys will premiere on Prime Video on June 13. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
                 time: '11:50 AM',
                 type: 'unread',
+                date: '16/05/2024'
             },
         ]
     },
 ];
-
-
-
-
 
 const NotificationScreen = () => {
     const navigation = useNavigation();
@@ -75,28 +101,26 @@ const NotificationScreen = () => {
     };
 
     const filteredNotifications = showUnread
-    ? notifications.filter(notification => notification.type === 'unread')
-    : notifications;
+        ? notifications.map(notificationGroup => ({
+            ...notificationGroup,
+            notifications: notificationGroup.notifications.filter(notification => notification.type === 'unread')
+        })).filter(notificationGroup => notificationGroup.notifications.length > 0)
+        : notifications;
 
-
-
-const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-        return `${text.substring(0, maxLength)}...`;
-    }
-    return text;
-};
-
-    
+    const truncateText = (text, maxLength) => {
+        if (text.length > maxLength) {
+            return `${text.substring(0, maxLength)}...`;
+        }
+        return text;
+    };
 
     return (
         <SafeAreaView style={styles.container}>
-        
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                   <BackIcon />
+                    <BackIcon />
                 </TouchableOpacity>
-                <Text style={styles.notificationText}>Notification</Text>
+                <Text style={styles.notificationText}>Notifications</Text>
             </View>
             <View style={styles.separator} />
             <View style={styles.boxContainer}>
@@ -118,7 +142,7 @@ const truncateText = (text, maxLength) => {
                     ]}
                     onPress={handleUnreadPress}
                 >
-                    <View style={styles.unread} >
+                    <View style={styles.unread}>
                         <Text style={[styles.boxText, activeSection === 'Unread' ? { color: 'white' } : null]}>Unread</Text>
                         <Ionicons name="ellipse" size={5} color="#07F411" style={{ marginLeft: 4, }} />
                     </View>
@@ -126,50 +150,54 @@ const truncateText = (text, maxLength) => {
             </View>
 
             <ScrollView>
-    {notifications.map((dailyNotifications, index) => {
-        const unreadNotifications = dailyNotifications.notifications.filter(notification => notification.type === 'unread');
-        if (showUnread && unreadNotifications.length === 0) {
-            return null; 
-        }
-
-        return (
-            <View key={index} style={styles.notificationbox}>
-                <Text>{dailyNotifications.date}</Text>
-                {dailyNotifications.notifications
-                    .filter(notification => !showUnread || notification.type === 'unread')
-                    .map((notification, innerIndex) => (
-                        <View key={innerIndex} style={styles.notificationboxcontent}>
-                            <View style={styles.notificationlogo}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                <View style={styles.shadowContainer}>
-                                    <Image style={styles.streamLogo} source={notification.image} />
-                                    <Image source={notification.images} />
+                {filteredNotifications.map((dailyNotifications, index) => (
+                    <View key={index} style={styles.notificationbox}>
+                        <Text>{dailyNotifications.date}</Text>
+                        {dailyNotifications.notifications.map((notification, innerIndex) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('NotificationOpenedScreen', { company: notification.company, image: notification.image, date: notification.date, time: notification.time, title: notification.title, message: notification.message, contentimages: notification.contentimages, })} key={innerIndex} style={styles.notificationboxcontent}>
+                                <View style={styles.notificationlogo}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                        <View style={styles.shadowContainer}>
+                                            <Image style={styles.streamLogo} source={notification.image} />
+                                        </View>
+                                        <Text style={notification.type === 'unread' ? styles.notificationboxmsgtextunread : styles.notificationboxmsgtext}>
+                                            {notification.company}
+                                        </Text>
+                                    </View>
+                                    <EllipseHorizontalIcon />
                                 </View>
-                                    <Text style={notification.type === 'unread' ? styles.notificationboxmsgtextunread : styles.notificationboxmsgtext}>
-                                        {notification.company}
-                                    </Text>
-                                </View>
-                                <Ionicons name="ellipsis-horizontal-outline" size={24} color="#56545C" />
-                            </View>
-                                <Text style={notification.type === 'unread' ? styles.notificationboxmsgtextbottom :  styles.notificationboxmsgtextbottomgray}>
+                                <Text style={notification.type === 'unread' ? styles.notificationboxmsgtextbottom : styles.notificationboxmsgtextbottomgray}>
                                     {truncateText(notification.message, 86)}
                                 </Text>
-              
-                            <View style={styles.notificationboxtime}>
-                                <Text style={styles.notificationboxmsgtime}>{notification.time}</Text>
-                            </View>
-                        </View>
-                    ))}
-            </View>
-        );
-    })}
-</ScrollView>
-
-
-            
+                                <View style={styles.streamlogocontent}>
+                                {notification.contentimages && notification.contentimages.map((img, imgIndex) => (
+                                    <View key={imgIndex} style={styles.imageContainer}>
+                                        <Image
+                                            style={[
+                                                styles.streamlogocontents,
+                                                notification.company === 'Netflix' && styles.netflixImage,
+                                                notification.company === 'Prime Video' && styles.streamlogocontents2,
+                                                notification.company === 'Genesis Cinema' && (
+                                                    (imgIndex === 0 && { transform: [{ rotate: '-20deg' }] }) ||
+                                                    (imgIndex === notification.contentimages.length - 1 && { transform: [{ rotate: '20deg' }] })
+                                                ),
+                                                // Add more conditions for other companies if needed
+                                            ]}
+                                            source={img.source}
+                                        />
+                                    </View>
+                                ))}
+                                </View>
+                                <View style={styles.notificationboxtime}>
+                                    <Text style={styles.notificationboxmsgtime}>{notification.time}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                ))}
+            </ScrollView>
         </SafeAreaView>
     );
 };
-
 
 export default NotificationScreen;

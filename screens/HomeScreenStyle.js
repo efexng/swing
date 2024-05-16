@@ -84,9 +84,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end', // Center content horizontally
   },
   modalContent: {
-    backgroundColor: '#fff',
-    width: 'auto',
-    height: 'auto',
+    backgroundColor: 'rgba(245, 245, 245, 1)',
+    width: 236,
+    height: 256,
     borderRadius: 10,
     padding: 20,
     right: 10,
@@ -101,7 +101,9 @@ const styles = StyleSheet.create({
   },
   modalOptionText: {
     marginLeft: 10,
-    fontSize: 18,
+    fontFamily: 'Outfit_400Regular',
+    fontSize: 16,
+    color: 'rgba(60, 60, 67, 1)'
   },
   outerCirclecontainer: {
     position: 'absolute',

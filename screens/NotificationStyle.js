@@ -93,6 +93,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: '90%',
         marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     notificationlogo: {
         flexDirection: 'row',
@@ -161,6 +169,37 @@ const styles = StyleSheet.create({
         height: 24,
         borderRadius: 50,
     },
+    streamlogocontent: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        width: '90%',
+        marginTop: 10,
+    },
+    streamlogocontents: {
+        width: 42,
+        height: 50,
+        borderRadius: 4,
+    },
+    streamlogocontents2: {
+        width: 270,
+        height: 150,
+        borderRadius: 4,
+        marginLeft: 45,
+    },
+    streamlogocontentstxt:{
+        fontSize: 16,
+        fontFamily: 'Outfit_400Regular',
+        marginLeft: 10,
+        color: 'black',
+    },
+    streamlogocontentstxtgray: {
+        fontSize: 16,
+        fontFamily: 'Outfit_400Regular',
+        marginLeft: 10,
+        color: 'gray',
+    }
 });
 
 export default styles;

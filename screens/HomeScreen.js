@@ -4,7 +4,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
 import styles from './HomeScreenStyle';
-import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon, NotificationIcon } from './icons';
+import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon, ModalSaveIcon,ModalShareIcon, ModalFlagIcon, ModalStopIcon, EllipseVerticalHomeIcon } from './icons';
 import { useFonts, Outfit_100Thin, Outfit_200ExtraLight, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold, Outfit_800ExtraBold, Outfit_900Black } from '@expo-google-fonts/outfit';
 
 const videoData = [
@@ -323,11 +323,7 @@ export default function HomeScreen() {
                     {videoStates[item.id]?.isMuted ? <VolumeSlashIcon /> : <VolumeIcon />}
                   </TouchableOpacity>
                   <TouchableOpacity onPress={toggleModal}>
-                    <Ionicons
-                      name="ellipsis-vertical-outline"
-                      size={24}
-                      color="#fff"
-                    />
+                  <EllipseVerticalHomeIcon />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -376,19 +372,19 @@ export default function HomeScreen() {
         </TouchableOpacity>
         <View style={styles.modalContent}>
           <TouchableOpacity style={styles.modalOption}>
-            <Ionicons name="bookmark-outline" size={30} color="#000" />
+            <ModalSaveIcon />
             <Text style={styles.modalOptionText}>Add Trailer to Library</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.modalOption}>
-            <Ionicons name="share-social-outline" size={30} color="#000" />
+          <ModalShareIcon />
             <Text style={styles.modalOptionText}>Share</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.modalOption}>
-            <Ionicons name="flag-outline" size={30} color="#000" />
+          <ModalFlagIcon />
             <Text style={styles.modalOptionText}>Report</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.modalOption}>
-            <Ionicons name="alert-circle-outline" size={30} color="red" />
+          <ModalStopIcon />
             <Text style={[styles.modalOptionText, { color: 'red' }]}>Not Interested</Text>
           </TouchableOpacity>
         </View>
