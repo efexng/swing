@@ -1,22 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Animated, Easing } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const OnBoardingScreen1 = () => {
   const navigation = useNavigation();
-  const animValue = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(animValue, {
-      toValue: 1,
-      duration: 1000,
-      easing: Easing.elastic(0.5), // Change the easing function here
-      useNativeDriver: true,
-    }).start();
-  }, []);
 
   return (
-    <Animated.View style={[styles.container, { opacity: animValue }]}>
+    <View style={styles.container}>
       <View style={styles.centeredView}>
         <Image source={require('../assets/Onboarding_background1.png')} style={styles.image} />
         <View style={styles.overlay}></View>
@@ -30,7 +20,7 @@ const OnBoardingScreen1 = () => {
           <Text style={styles.skipText}>Skip</Text>
         </TouchableOpacity>
       </View>
-    </Animated.View>
+    </View>
   );
 };
 
@@ -51,29 +41,28 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(83, 3, 255, 0.4)', // Purple color with 40% opacity
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Purple color with 40% opacity
   },
   text: {
     position: 'absolute',
     top: 120,
     left: 30,
     color: '#fff',
-    fontSize: 20,
+    fontSize: 25,
     padding: 10,
-    lineHeight: 25,
-    fontWeight: 'bold',
-    width: 272,
+    fontFamily: 'Outfit_600SemiBold',
+    width: 300,
   },
   paginationContainer: {
     position: 'absolute',
-    bottom: 150,
+    bottom: 120,
     paddingHorizontal: 30,
     paddingVertical: 20,
     flexDirection: 'row',
   },
   paginationEllipse: {
-    width: 10,
-    height: 10,
+    width: 8,
+    height: 8,
     borderRadius: 5,
     backgroundColor: '#fff',
     marginHorizontal: 5,
@@ -85,14 +74,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 70,
     backgroundColor: '#fff',
-    paddingHorizontal: 30,
-    paddingVertical: 20,
+    width: 78,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 10,
   },
   skipText: {
     color: '#5303FF',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontFamily: 'Outfit_500Medium'
   },
 });
 

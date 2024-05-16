@@ -122,12 +122,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
+    fontFamily: 'Outfit_500Medium',
     marginTop: 10,
     marginBottom: 20,
     marginTop: 20,
     margin: 20,
-    textAlign: 'left',
+    color: 'rgba(58, 58, 58, 1)'
   },
   genreContainer: {
     flexDirection: 'row',
@@ -151,7 +152,9 @@ const styles = StyleSheet.create({
   },
   
   genreText: {
-    fontSize: 16,
+    fontSize: 14,
+    fontFamily: 'Outfit_400Regular',
+    color: 'rgba(67, 67, 74, 1)',
   },
   selectedGenre: {
     borderWidth: 0,
@@ -159,6 +162,8 @@ const styles = StyleSheet.create({
   },
   selectedGenreText: {
     color: '#fff', // White text color when selected
+    fontFamily: 'Outfit_600SemiBold', 
+    fontSize: 14,
   },
   button: {
     backgroundColor: '#5303FF',
@@ -166,7 +171,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    marginTop: 20,
     height: 50,
     width: '90%',
     margin: 'auto',
@@ -174,6 +178,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
+    fontFamily: 'Outfit_600SemiBold' 
   },
   modalContainer: {
     flex: 1,
@@ -196,20 +201,23 @@ const styles = StyleSheet.create({
   },
   modaltext1: {
     fontSize: 16,
+    fontFamily: 'Outfit_400Regular',
     textAlign: 'center',
-    color: '#5303FF',
+    color: '#000',
     marginBottom: 30,
     marginTop: 30,
     margin: 20,
   },
   modalButton: {
     fontSize: 16,
+    fontFamily: 'Outfit_400Regular',
     textAlign: 'center',
     color: '#5303FF',
     marginTop: 15,
     marginBottom: 5,
   },
   modalButtonDanger: {
+    fontFamily: 'Outfit_400Regular',
     fontSize: 16,
     textAlign: 'center',
     color: 'red',

@@ -80,7 +80,9 @@ const SignupScreen = () => {
   onPress={handleSignup}
   disabled={email.trim().length === 0 || !isValidEmail} // Disable button based on conditions
 >
-  <Text style={styles.ctaText}>Continue</Text>
+  <Text style={[styles.ctaText, (email.trim().length === 0 || !isValidEmail) && styles.ctaTextDisabled]}>
+    Continue
+  </Text>
 </TouchableOpacity>
 
 
@@ -127,14 +129,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 53,
+    height: 50,
     resizeMode: 'contain',
   },
   login: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'black',
+    fontSize: 25,
+    color: 'rgba(18, 18, 18, 1)',
+    fontFamily: 'Outfit_400Regular'
   },
   containerlogin: {
     margin: 20,
@@ -203,15 +205,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     height: 50,
     width: '90%',
-    color: 'gray',
   },
   ctaTextDisabled: {
-    color: '#999', // You can change this color to your preferred disabled text color
+    color: '#999',
     fontSize: 16,
+    fontFamily: 'Outfit_600SemiBold',
   },
   ctaText: {
     color: '#fff',
     fontSize: 16,
+    fontFamily: 'Outfit_600SemiBold',
   },
   socialButton: {
     flexDirection: 'row',
@@ -251,13 +254,14 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   buttonText: {
-    color: 'black',
+    color: 'rgba(52, 64, 84, 1)',
     fontSize: 16,
+    fontFamily: 'Outfit_600SemiBold'
   },
   ForgotbuttonText: {
-    color: 'black',
+    color: 'rgba(17, 17, 19, 1)',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Outfit_600SemiBold'
   },
   socialImage: {
     width: 20,
@@ -292,10 +296,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     color: 'black',
+    fontFamily: 'Outfit_400Regular'
   },
   blueText: {
     color: '#5303FF',
     textDecorationLine: 'underline',
-    fontWeight: 'bold',
+    fontFamily: 'Outfit_400Regular'
   },
 })

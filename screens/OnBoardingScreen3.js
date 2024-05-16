@@ -57,29 +57,30 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(83, 3, 255, 0.4)', // Purple color with 40% opacity
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Purple color with 40% opacity
   },
   text: {
     position: 'absolute',
       top: 120,
       left: 30,
       color: '#fff',
-      fontSize: 30,
+      fontSize: 28,
       padding: 10,
-      lineHeight: 35,
+      lineHeight: 34,
       fontWeight: 'bold',
-      width: 320,
+      width: 300,
+      fontFamily: 'Outfit_700Bold',
   },
   paginationContainer: {
     position: 'absolute',
-    bottom: 150,
+    bottom: 180,
     paddingHorizontal: 30,
     paddingVertical: 20,
     flexDirection: 'row',
   },
   paginationEllipse: {
-    width: 10,
-    height: 10,
+    width: 8,
+    height: 8,
     borderRadius: 5,
     backgroundColor: '#fff',
     marginHorizontal: 5,
@@ -89,25 +90,28 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     position: 'absolute',
-    bottom: 70,
-    paddingHorizontal: 150,
-    paddingVertical: 20,
+    bottom: 110,
+    width: 343,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 10,
   },
   skipText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: 'Outfit_500Medium',
   },
   signInButton: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 50,
     paddingHorizontal: 30,
     paddingVertical: 20,
     borderRadius: 10,
   },
   signInText: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontFamily: 'Outfit_500Medium'
   },
 });

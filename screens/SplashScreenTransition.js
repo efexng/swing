@@ -6,8 +6,9 @@ const SplashScreenTransition = () => {
   const navigation = useNavigation();
   const fadeAnim1 = useRef(new Animated.Value(1)).current;
   const fadeAnim2 = useRef(new Animated.Value(0)).current;
-  const scaleAnim2 = useRef(new Animated.Value(0.5)).current; // Initial scale for SplashScreen2
+  const scaleAnim2 = useRef(new Animated.Value(0.5)).current;
   const rotateAnim1 = useRef(new Animated.Value(30)).current;
+  const backgroundColorAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,40 +38,53 @@ const SplashScreenTransition = () => {
             easing: Easing.linear,
             useNativeDriver: true,
           }),
+          Animated.timing(backgroundColorAnim, {
+            toValue: 1,
+            duration: 800,
+            easing: Easing.linear,
+            useNativeDriver: false,
+          }),
         ]).start(() => {
           setTimeout(() => {
             navigation.navigate('OnBoardingScreen1');
-          }, 2000); // Delay of 2 seconds before navigation
+          }, 2000);
         });
-      }, 1100);
+      }, 900);
     }, 500);
-  }, [fadeAnim1, fadeAnim2, scaleAnim2, navigation, rotateAnim1]);
+  }, [fadeAnim1, fadeAnim2, scaleAnim2, navigation, rotateAnim1, backgroundColorAnim]);
+
+  const backgroundColorInterpolate = backgroundColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['#17191C', '#FFFFFF'],
+  });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Animated.View style={[styles.absoluteFill, { opacity: fadeAnim1 }]}>
-        <View style={styles.centeredView}>
-          <Animated.Image
-            source={require('../assets/logo_black.png')}
-            style={[
-              styles.image,
-              {
-                transform: [
-                  { rotate: rotateAnim1.interpolate({ inputRange: [0, 180], outputRange: ['0deg', '360deg'] }) },
-                ],
-              },
-            ]}
-          />
-        </View>
-      </Animated.View>
+    <View style={styles.container}>
+      <Animated.View style={[styles.background, { backgroundColor: backgroundColorInterpolate }]}>
+        <Animated.View style={[styles.absoluteFill, { opacity: fadeAnim1 }]}>
+          <View style={styles.centeredView}>
+            <Animated.Image
+              source={require('../assets/logo_black.png')}
+              style={[
+                styles.image,
+                {
+                  transform: [
+                    { rotate: rotateAnim1.interpolate({ inputRange: [0, 180], outputRange: ['0deg', '360deg'] }) },
+                  ],
+                },
+              ]}
+            />
+          </View>
+        </Animated.View>
 
-      <Animated.View style={[styles.absoluteFill, { opacity: fadeAnim2, transform: [{ scale: scaleAnim2 }] }]}>
-        <View style={styles.centeredView}>
-          <Image source={require('../assets/logo.png')} style={styles.image} />
-          <Text style={styles.logotext}>SWING</Text>
-        </View>
+        <Animated.View style={[styles.absoluteFill, { opacity: fadeAnim2, transform: [{ scale: scaleAnim2 }] }]}>
+          <View style={styles.centeredView}>
+            <Image source={require('../assets/logo.png')} style={styles.image} />
+            <Text style={styles.logotext}>SWING</Text>
+          </View>
+        </Animated.View>
       </Animated.View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -79,7 +93,9 @@ export default SplashScreenTransition;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#17191C',
+  },
+  background: {
+    flex: 1,
   },
   absoluteFill: {
     ...StyleSheet.absoluteFillObject,
