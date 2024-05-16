@@ -6,7 +6,9 @@ import { BackIcon, EllipseVerticalIcon, ArrowRightIcon, ModalShareIcon, ModalFla
 import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import { Dimensions } from 'react-native';
 
+const screenWidth = Dimensions.get('window').width;
 
 const NotificationOpenedScreen = () => {
     const navigation = useNavigation();
@@ -265,7 +267,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
     },
     genesisCinemaContainer1: {
-        width: 343,
+        width: screenWidth > 375 ? 363 : 343, 
         height: 174,
         backgroundColor: 'white',
         shadowColor: '#000',

@@ -3,8 +3,7 @@ import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { enableScreens } from 'react-native-screens';
-import HomeScreen1 from './screens/HomeScreen1';
-import HomeScreen2 from './screens/HomeScreen2';
+import SplashScreenTransition from './screens/SplashScreenTransition';
 import OnBoardingScreen1 from './screens/OnBoardingScreen1';
 import OnBoardingScreen2 from './screens/OnBoardingScreen2';
 import OnBoardingScreen3 from './screens/OnBoardingScreen3';
@@ -35,22 +34,21 @@ export default function App() {
         }}
       >
 
-<Stack.Screen name='NotificationScreen' component={NotificationScreen} />
 
-
-        <Stack.Screen name='HomeScreen' component={HomeScreen} />
-
-        <Stack.Screen name='HomeScreen1' component={HomeScreen1} />
-        <Stack.Screen name='HomeScreen2' component={HomeScreen2} />
+        <Stack.Screen name='SplashScreenTransition' component={SplashScreenTransition} />
         <Stack.Screen name='OnBoardingScreen1' component={OnBoardingScreen1} />
         <Stack.Screen name='OnBoardingScreen2' component={OnBoardingScreen2} />
         <Stack.Screen name='OnBoardingScreen3' component={OnBoardingScreen3} />
         <Stack.Screen name='SignupScreen' component={SignupScreen} />
         <Stack.Screen name='ExploreGenres' component={ExploreGenres} />
+        <Stack.Screen name='HomeScreen' component={HomeScreen} />
+
         <Stack.Screen name='CinemaScreen' component={CinemaScreen} />
         <Stack.Screen name='SavedScreen' component={SavedScreen} />
         <Stack.Screen name='MoreScreen' component={MoreScreen} />
         <Stack.Screen name='UploadScreen' component={UploadScreen} />
+        <Stack.Screen name='NotificationScreen' component={NotificationScreen} />
+
         <Stack.Screen name='NotificationOpenedScreen' component={NotificationOpenedScreen} />
         <Stack.Screen name='UploadScreenExtract' component={UploadScreenExtract} />
         <Stack.Screen name='UploadScreenExtractError' component={UploadScreenExtractError} />
