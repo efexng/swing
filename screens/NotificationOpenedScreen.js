@@ -73,7 +73,7 @@ const NotificationOpenedScreen = () => {
         </TouchableOpacity>
           <Text style={styles.PrimeImagetxt}>{contentimages[0].text}</Text>
           <Image style={styles.PrimeImage} source={contentimages[0].source} />
-          <TouchableOpacity style={styles.primeplay}>
+          <TouchableOpacity style={styles.primeplay} onPress={() => Linking.openURL(contentimages[0].trailer)}>
           <Image source={require('../assets/play-icon.png')} style={styles.playicon} />
           </TouchableOpacity>
         </View>
