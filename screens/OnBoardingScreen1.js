@@ -1,6 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
+
+
+const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
 
 const OnBoardingScreen1 = () => {
   const navigation = useNavigation();
@@ -8,7 +14,12 @@ const OnBoardingScreen1 = () => {
   return (
     <View style={styles.container}>
       <View style={styles.centeredView}>
-        <Image source={require('../assets/Onboarding_background1.png')} style={styles.image} />
+        <Image 
+         source={require('../assets/Onboarding_background1.png')}
+         style={styles.image}
+         placeholder={{ blurhash }}
+         transition={1000}
+          />
         <View style={styles.overlay}></View>
         <Text style={styles.text}>Couldn't figure out a movie title? We've got you.</Text>
         <View style={styles.paginationContainer}>

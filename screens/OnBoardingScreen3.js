@@ -1,25 +1,30 @@
 // OnBoardingScreen3.js
-import React, { useEffect, useRef } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Animated, Easing } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
+
+
+
+const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
+
+
 
 const OnBoardingScreen3 = () => {
   const navigation = useNavigation();
-  const animValue = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    Animated.timing(animValue, {
-      toValue: 1,
-      duration: 800,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-  }, []);
 
   return (
-    <Animated.View style={[styles.container, { opacity: animValue }]}>
+    <View style={styles.container}>
       <View style={styles.centeredView}>
-        <Image source={require('../assets/Onboarding_background3.png')} style={styles.image} />
+        <Image 
+         source={require('../assets/Onboarding_background3.png')}
+         style={styles.image}
+         placeholder={{ blurhash }}
+         transition={1000}
+
+          />
         <View style={styles.overlay}></View>
         <Text style={styles.text}>Get the best recommendation for all movies</Text>
         <View style={styles.paginationContainer}>
@@ -34,7 +39,7 @@ const OnBoardingScreen3 = () => {
           <Text style={styles.signInText}>Sign in</Text>
         </TouchableOpacity>
       </View>
-    </Animated.View>
+    </View>
   );
 };
 
@@ -61,15 +66,15 @@ const styles = StyleSheet.create({
   },
   text: {
     position: 'absolute',
-      top: 120,
-      left: 30,
-      color: '#fff',
-      fontSize: 28,
-      padding: 10,
-      lineHeight: 34,
-      fontWeight: 'bold',
-      width: 300,
-      fontFamily: 'Outfit_700Bold',
+    top: 120,
+    left: 30,
+    color: '#fff',
+    fontSize: 28,
+    padding: 10,
+    lineHeight: 34,
+    fontWeight: 'bold',
+    width: 300,
+    fontFamily: 'Outfit_700Bold',
   },
   paginationContainer: {
     position: 'absolute',

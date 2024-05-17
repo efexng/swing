@@ -174,7 +174,8 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     color: 'red',
-    fontSize: 12,
+    fontSize: 14,
+    fontFamily: 'Outfit_400Regular',
     marginTop: 5,
     position: 'absolute',
     top: '50%', // Position the icon at the center vertically
