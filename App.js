@@ -34,7 +34,7 @@ export default function App() {
         }}
       >
 
-<Stack.Screen name='UploadScreenExtractMatch' component={UploadScreenExtractMatch} />
+<Stack.Screen name='CinemaScreen' component={CinemaScreen} />
 
         <Stack.Screen name='SplashScreenTransition' component={SplashScreenTransition} />
         <Stack.Screen name='OnBoardingScreen1' component={OnBoardingScreen1} />
@@ -44,7 +44,6 @@ export default function App() {
         <Stack.Screen name='ExploreGenres' component={ExploreGenres} />
         <Stack.Screen name='HomeScreen' component={HomeScreen} />
 
-        <Stack.Screen name='CinemaScreen' component={CinemaScreen} />
         <Stack.Screen name='SavedScreen' component={SavedScreen} />
         <Stack.Screen name='MoreScreen' component={MoreScreen} />
         <Stack.Screen name='UploadScreen' component={UploadScreen} />
@@ -53,6 +52,7 @@ export default function App() {
         <Stack.Screen name='NotificationOpenedScreen' component={NotificationOpenedScreen} />
         <Stack.Screen name='UploadScreenExtract' component={UploadScreenExtract} />
         <Stack.Screen name='UploadScreenExtractError' component={UploadScreenExtractError} />
+        <Stack.Screen name='UploadScreenExtractMatch' component={UploadScreenExtractMatch} />
 
 
       </Stack.Navigator>

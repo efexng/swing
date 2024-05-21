@@ -18,7 +18,7 @@ const UploadScreenExtractMatch = () => {
     };
 
     const handleOpenMap = () => {
-        const address = 'Gwagwalada, Abuja'; // Address to prepopulate in the map
+        const address = 'Gwagwalada, Abuja';
         const encodedAddress = encodeURIComponent(address);
         const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
         Linking.openURL(mapUrl); // Open Google Maps with the prepopulated address
@@ -89,7 +89,7 @@ const UploadScreenExtractMatch = () => {
                                         />
                                         <View style={styles.castTextContainer}>
                                             <Text style={styles.castText}>Actor 1</Text>
-                                            <Text style={styles.castText}>Role: Character 1</Text>
+                                            <Text style={styles.castTextsub}>Role: Character 1</Text>
                                         </View>
                                     </View>
                                     <View style={styles.castImageContainer}>
@@ -101,7 +101,7 @@ const UploadScreenExtractMatch = () => {
                                         />
                                         <View style={styles.castTextContainer}>
                                             <Text style={styles.castText}>Actor 1</Text>
-                                            <Text style={styles.castText}>Role: Character 1</Text>
+                                            <Text style={styles.castTextsub}>Role: Character 1</Text>
                                         </View>
                                     </View>
                                     <View style={styles.castImageContainer}>
@@ -113,7 +113,7 @@ const UploadScreenExtractMatch = () => {
                                         />
                                         <View style={styles.castTextContainer}>
                                             <Text style={styles.castText}>Actor 1</Text>
-                                            <Text style={styles.castText}>Role: Character 1</Text>
+                                            <Text style={styles.castTextsub}>Role: Character 1</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
     ctaText: {
         color: '#5303FF',
         fontSize: 16,
+        fontFamily: 'Outfit_500Medium' 
     },
     bottom: {
         margin: 20,
@@ -273,44 +274,44 @@ const styles = StyleSheet.create({
     },
     contentstxt1: {
         color: 'white',
-        fontSize: 20,
-        fontWeight: '900',
+        fontSize: 25,
+        fontFamily: 'Outfit_700Bold',
     },
     contentstxt2: {
         color: 'white',
-        fontSize: 18,
-        fontWeight: '600',
+        fontSize: 16,
+        fontFamily: 'Outfit_600SemiBold',
     },
     contentstxt3: {
         color: 'white',
         fontSize: 14,
-        width: 343,
+        width: 345,
         marginTop: 5,
-        fontWeight: '300',
+        fontFamily: 'Outfit_400Regular'
     },
     contentstxt4: {
         color: 'white',
         fontSize: 14,
-        fontWeight: '300',
+        fontFamily: 'Outfit_600SemiBold' ,
         marginRight: 10,
     },
     contentstxt5: {
         color: 'white',
         fontSize: 14,
-        fontWeight: '300',
+        fontFamily: 'Outfit_600SemiBold' ,
         marginRight: 10,
     },
     contentstxt6: {
         color: 'white',
         fontSize: 14,
-        width: 343,
-        fontWeight: '300',
+        fontFamily: 'Outfit_400Regular',
+        width: '100%',
     },
     contentstxt7: {
         color: 'white',
         marginTop: 10,
-        fontSize: 18,
-        fontWeight: '600',
+        fontSize: 20,
+        fontFamily: 'Outfit_600SemiBold',
         marginTop: 20,
     },
     subcontents: {
@@ -333,8 +334,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     castImage: {
-        width: 50,
-        height: 50,
+        width: 75,
+        height: 75,
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 100,
@@ -345,8 +346,15 @@ const styles = StyleSheet.create({
     },
     castText: {
         color: 'white',
+        fontSize: 14,
+        textAlign: 'center',
+        fontFamily: 'Outfit_700Bold',
+    },
+    castTextsub: {
+        color: 'white',
         fontSize: 12,
         textAlign: 'center',
+        fontFamily: 'Outfit_400Regular',
     },
     streamplatform: {
         flexDirection: 'column',
@@ -374,8 +382,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        height: 30,
-        width: 140,
+        height: 36,
+        width: 138,
     },
     platformcta2: {
         backgroundColor: '#EEE9FE',
@@ -384,24 +392,27 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        height: 30,
-        width: 120,
+        height: 36,
+        width: 112,
     },
     platformicontxt: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 20,
+        fontFamily: 'Outfit_600SemiBold'
     },
     platformtxt1: {
         color: '#fff',
-        fontSize: 12,
+        fontSize: 14,
+        fontFamily: 'Outfit_500Medium'
     },
     platformtxt2: {
         color: '#5303FF',
-        fontSize: 12,
+        fontSize: 14,
+        fontFamily: 'Outfit_700Bold'
     },
     platformtxt1icon: {
         color: '#fff',
-        fontSize: 12,
+        fontSize: 14,
     },
     platformlocation: {
         flexDirection: 'row',
@@ -412,5 +423,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 12,
         marginLeft: 10,
+        fontFamily: 'Outfit_400Regular'
     },
 });
