@@ -216,6 +216,24 @@ export const SearchIcon = () => (
 </Svg>
 
 )
+
+export const LocationIcon = () => (
+<Svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Path d="M13.9648 5.3375C13.1773 1.8725 10.1548 0.3125 7.49983 0.3125C7.49983 0.3125 7.49983 0.3125 7.49233 0.3125C4.84483 0.3125 1.81483 1.865 1.02733 5.33C0.149827 9.2 2.51983 12.4775 4.66483 14.54C5.45983 15.305 6.47983 15.6875 7.49983 15.6875C8.51983 15.6875 9.53983 15.305 10.3273 14.54C12.4723 12.4775 14.8423 9.2075 13.9648 5.3375ZM7.49983 9.095C6.19483 9.095 5.13733 8.0375 5.13733 6.7325C5.13733 5.4275 6.19483 4.37 7.49983 4.37C8.80483 4.37 9.86233 5.4275 9.86233 6.7325C9.86233 8.0375 8.80483 9.095 7.49983 9.095Z" fill="#43434A"/>
+</Svg>
+)
+
+export const ChevronDownICon = () => (
+<Svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Path d="M14.5999 1.45825L9.16657 6.89159C8.5249 7.53325 7.4749 7.53325 6.83324 6.89159L1.3999 1.45825" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</Svg>
+)
+  
+export const ChevronUpICon = () => (
+<Svg width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <Path d="M14.5999 7.54175L9.16657 2.10841C8.5249 1.46675 7.4749 1.46675 6.83324 2.10841L1.3999 7.54175" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</Svg>
+)
   
 
   const icons = () => {
