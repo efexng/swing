@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'; // Added TouchableOpacity
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { CinemaIcon, HomeIconNF, SavedIconFill, MoreIcon, } from './icons'; // Ensure other icons are imported if needed
 import { useNavigation } from '@react-navigation/native';
 
 const SavedScreen = () => {
@@ -12,22 +13,21 @@ const SavedScreen = () => {
     <SafeAreaView style={styles.container}>
         <Text>This is SavedScreen</Text>
 
-      <View style={styles.bottomContainer}>
-        {/* TouchableOpacity added to make each icon touchable */}
-        <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('HomeScreen')}>
-          <Ionicons name="home" size={30} color="#17161A" />
+        <View style={styles.bottomContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.iconContainer}>
+          <HomeIconNF />
           <Text style={styles.iconText}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('CinemaScreen')}>
-          <Ionicons name="film-outline" size={30} color="#17161A" />
-          <Text style={styles.iconText}>Cinema</Text>
+        <TouchableOpacity  onPress={() => navigation.navigate('CinemaScreen')} style={styles.iconContainer}>
+          <CinemaIcon />
+          <Text  style={styles.iconText}>Cinema</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer}>
-          <Ionicons name="bookmark" size={30} color="#5303FF" />
+          <SavedIconFill />
           <Text style={styles.iconTextSaved}>Save</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('MoreScreen')}>
-          <Ionicons name="ellipsis-horizontal-outline" size={30} color="#17161A" />
+        <TouchableOpacity onPress={() => navigation.navigate('MoreScreen')} style={styles.iconContainer}>
+          <MoreIcon />
           <Text style={styles.iconText}>More</Text>
         </TouchableOpacity>
       </View>
@@ -62,10 +62,14 @@ const styles = StyleSheet.create({
   },
   iconText: {
     color: '#17161A',
-    marginTop: 5,
+    fontFamily: 'Outfit_400Regular',
+    fontSize: 14,
+    lineHeight: 16.8
   },
   iconTextSaved: {
     color: '#5303FF',
-    marginTop: 5,
+    fontFamily: 'Outfit_600SemiBold',
+    fontSize: 14,
+    lineHeight: 16.8
   },
 });

@@ -54,11 +54,28 @@ export const CinemaIconFill = () => (
       <Path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
     </Svg>
   );
+
+  export const SavedIconFill = () => (
+<Svg  width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5303FF" class="size-6">
+  <Path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z" clip-rule="evenodd" />
+</Svg>
+
+
+  );
   
   export const MoreIcon = () => (
-    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="1.5">
-      <Path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+    <Svg width="24" height="24" viewBox="0 0 19 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <Path d="M2.8999 2H2.9099M9.8999 2H9.9099M16.8999 2H16.9099M3.8999 2C3.8999 2.55228 3.45219 3 2.8999 3C2.34762 3 1.8999 2.55228 1.8999 2C1.8999 1.44772 2.34762 1 2.8999 1C3.45219 1 3.8999 1.44772 3.8999 2ZM10.8999 2C10.8999 2.55228 10.4522 3 9.8999 3C9.34762 3 8.8999 2.55228 8.8999 2C8.8999 1.44772 9.34762 1 9.8999 1C10.4522 1 10.8999 1.44772 10.8999 2ZM17.8999 2C17.8999 2.55228 17.4522 3 16.8999 3C16.3476 3 15.8999 2.55228 15.8999 2C15.8999 1.44772 16.3476 1 16.8999 1C17.4522 1 17.8999 1.44772 17.8999 2Z" stroke="#17161A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </Svg>
+    
+  );
+
+  export const MoreIconFill = () => (
+    <Svg width="24" height="24" viewBox="0 0 20 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <Path d="M5.0998 3.0001C5.0998 4.32558 4.02529 5.4001 2.6998 5.4001C1.37432 5.4001 0.299805 4.32558 0.299805 3.0001C0.299805 1.67461 1.37432 0.600098 2.6998 0.600098C4.02529 0.600098 5.0998 1.67461 5.0998 3.0001Z" fill="#5303FF"/>
+    <Path d="M12.2998 3.0001C12.2998 4.32558 11.2253 5.4001 9.89981 5.4001C8.57432 5.4001 7.4998 4.32558 7.4998 3.0001C7.4998 1.67461 8.57432 0.600098 9.89981 0.600098C11.2253 0.600098 12.2998 1.67461 12.2998 3.0001Z" fill="#5303FF"/>
+    <Path d="M17.0998 5.4001C18.4253 5.4001 19.4998 4.32558 19.4998 3.0001C19.4998 1.67461 18.4253 0.600098 17.0998 0.600098C15.7743 0.600098 14.6998 1.67461 14.6998 3.0001C14.6998 4.32558 15.7743 5.4001 17.0998 5.4001Z" fill="#5303FF"/>
+    </Svg>    
   );
 
   export const HeartIcon = () => (
@@ -186,7 +203,18 @@ export const ArrowRightIcon2 = () => (
 <Svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <Path d="M8.91016 19.9201L15.4302 13.4001C16.2002 12.6301 16.2002 11.3701 15.4302 10.6001L8.91016 4.08008" stroke="#121212" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </Svg>
+  );
 
+export const ArrowRightIcon3 = () => (
+<Svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Path d="M8 15.625L6.925 14.55L12.75 8.75H0.375V7.25H12.75L6.925 1.45L8 0.375L15.625 8L8 15.625Z" fill="#9E9E9E"/>
+</Svg>
+  );
+
+export const ArrowRightIcon4 = () => (
+<Svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Path d="M8 15.625L6.925 14.55L12.75 8.75H0.375V7.25H12.75L6.925 1.45L8 0.375L15.625 8L8 15.625Z" fill="#fff"/>
+</Svg>
   );
 
 export const TrashIcon = () => (

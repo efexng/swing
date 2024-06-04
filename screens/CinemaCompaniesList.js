@@ -31,7 +31,11 @@ const Companies = [
         {
             id: 3,
             image : require('../assets/madamweb.png'),
-            title: 'Madam web'
+            title: 'Madam web',
+            about: 'Cassandra Webb is a New York metropolis paramedic who begins to demonstrate signs of clairvoyance. Forced to challenge revelations about her past, she needs to safeguard three young women from a deadly adversary who wants them destroyed.',
+            releasedate: '2024',
+            movietime: '116mins',
+            genre: 'Sci-fi, Action, Adventure'
         },
     ]
   },

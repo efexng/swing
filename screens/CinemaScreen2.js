@@ -60,15 +60,19 @@ const CinemaScreen2 = () => {
                     </View>
                 </View>
                 <View style={styles.bottomseparator} />
-                {images && images.length > 0 && ( // Check if images exist and is not an empty array
+                {images && images.length > 0 && ( 
                     <View>
                         <Text style={styles.Text}>Movies Showing Today</Text>
                         <View style={styles.imagesContainer}>
                             {images.map((item) => (
-                                <View key={item.id.toString()} style={styles.imageContainer}>
+                                <TouchableOpacity onPress={() => navigation.navigate('MovieShowTime', {image: item.image, title: item.title, about: item.about, releasedate: item.releasedate, movietime: item.movietime, genre: item.genre })} key={item.id.toString()} style={styles.imageContainer}>
                                     <Image source={item.image} style={styles.image} />
                                     <Text style={styles.imageText}>{item.title}</Text>
-                                </View>
+                                    {/* "about" information not displayed here */}
+                                    {/* "releasedate" information not displayed here */}
+                                    {/* "movietime" information not displayed here */}
+                                    {/* "genre" information not displayed here */}
+            </TouchableOpacity>
                             ))}
                         </View>
                     </View>

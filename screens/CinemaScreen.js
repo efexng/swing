@@ -126,7 +126,7 @@ const CinemaScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SavedScreen')} style={styles.iconContainer}>
           <SavedIcon />
-          <Text style={styles.iconText}>Save</Text>
+          <Text style={styles.iconText}>Saved</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MoreScreen')} style={styles.iconContainer}>
           <MoreIcon />
@@ -332,11 +332,15 @@ const styles = StyleSheet.create({
   },
   iconText: {
     color: '#17161A',
-    marginTop: 5,
+    fontFamily: 'Outfit_400Regular',
+    fontSize: 14,
+    lineHeight: 16.8
   },
   iconTextCinema: {
     color: '#5303FF',
-    marginTop: 5,
+    fontFamily: 'Outfit_600SemiBold',
+    fontSize: 14,
+    lineHeight: 16.8
   },
   dropdown: {
     zIndex: 99,
