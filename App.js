@@ -13,6 +13,9 @@ import HomeScreen from './screens/HomeScreen';
 import MoreScreen from './screens/MoreScreen';
 import SavedScreen from './screens/SavedScreen';
 import CinemaScreen from './screens/CinemaScreen';
+import CinemaScreen2 from './screens/CinemaScreen2';
+import CinemaCompaniesList from './screens/CinemaCompaniesList';
+import CinemaScreenMovieList from './screens/CinemaScreenMovieList';
 import UploadScreen from './screens/UploadScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import NotificationOpenedScreen from './screens/NotificationOpenedScreen';
@@ -35,6 +38,10 @@ export default function App() {
       >
 
 <Stack.Screen name='CinemaScreen' component={CinemaScreen} />
+<Stack.Screen name='CinemaCompaniesList' component={CinemaCompaniesList} />
+<Stack.Screen name='CinemaScreen2' component={CinemaScreen2} />
+<Stack.Screen name='CinemaScreenMovieList' component={CinemaScreenMovieList} />
+
 
         <Stack.Screen name='SplashScreenTransition' component={SplashScreenTransition} />
         <Stack.Screen name='OnBoardingScreen1' component={OnBoardingScreen1} />
