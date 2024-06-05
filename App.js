@@ -39,13 +39,7 @@ export default function App() {
         }}
       >
 
-<Stack.Screen name='CinemaScreen' component={CinemaScreen} />
-<Stack.Screen name='CinemaCompaniesList' component={CinemaCompaniesList} />
-<Stack.Screen name='CinemaScreen2' component={CinemaScreen2} />
-<Stack.Screen name='MovieShowTime' component={MovieShowTime} />
-<Stack.Screen name='CinemaScreenMovieList' component={CinemaScreenMovieList} />
-<Stack.Screen name='TicketPurchaseModal' component={TicketPurchaseModal} />
-
+        <Stack.Screen name='SavedScreen' component={SavedScreen} />
 
         <Stack.Screen name='SplashScreenTransition' component={SplashScreenTransition} />
         <Stack.Screen name='OnBoardingScreen1' component={OnBoardingScreen1} />
@@ -54,8 +48,14 @@ export default function App() {
         <Stack.Screen name='SignupScreen' component={SignupScreen} />
         <Stack.Screen name='ExploreGenres' component={ExploreGenres} />
         <Stack.Screen name='HomeScreen' component={HomeScreen} />
+        <Stack.Screen name='CinemaScreen' component={CinemaScreen} />
+        <Stack.Screen name='CinemaCompaniesList' component={CinemaCompaniesList} />
+        <Stack.Screen name='CinemaScreen2' component={CinemaScreen2} />
+        <Stack.Screen name='MovieShowTime' component={MovieShowTime} />
+        <Stack.Screen name='CinemaScreenMovieList' component={CinemaScreenMovieList} />
+        <Stack.Screen name='TicketPurchaseModal' component={TicketPurchaseModal} />
 
-        <Stack.Screen name='SavedScreen' component={SavedScreen} />
+     
         <Stack.Screen name='MoreScreen' component={MoreScreen} />
         <Stack.Screen name='UploadScreen' component={UploadScreen} />
         <Stack.Screen name='NotificationScreen' component={NotificationScreen} />
