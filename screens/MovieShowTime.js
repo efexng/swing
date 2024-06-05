@@ -3,6 +3,8 @@ import { BackIcon, ArrowRightIcon3, ArrowRightIcon4 } from './icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import TicketPurchaseModal from './TicketPurchaseModal';
+
 
 const screenWidth = Dimensions.get('window').width;
 const genreData = [
@@ -19,13 +21,24 @@ const MovieShowTime = () => {
     const [selectedTime, setSelectedTime] = useState(null);
 
     const isTimeSelected = (date, time) => selectedTime && selectedTime.date === date && selectedTime.time === time;
-
+    const resetSelectedTime = () => {
+        setSelectedTime(null);
+    };
     const toggleTime = (date, time) => {
         if (isTimeSelected(date, time)) {
             setSelectedTime(null);
         } else {
             setSelectedTime({ date, time });
         }
+    };
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const [startTimer, setStartTimer] = useState(false);
+
+    const toggleModal = () => {
+        setIsModalVisible(!isModalVisible);
+        setStartTimer(isModalVisible); // Set startTimer based on modal visibility
     };
 
     return (
@@ -81,24 +94,25 @@ const MovieShowTime = () => {
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        style={[
-                            styles.buyButton,
-                            selectedTime && styles.activeBuyButton,
-                        ]}
-                        disabled={!selectedTime}
-                        onPress={() => {
-                            // Handle buy ticket action
-                        }}
-                    >
-                        <Text style={[
-                            styles.buyButtonText,
-                            selectedTime && styles.activeBuyButtonText,
-                        ]}>
-                            Buy Ticket
-                        </Text>
-                        {selectedTime ? <ArrowRightIcon4 style={styles.buyButtonIcon} /> : <ArrowRightIcon3 style={styles.buyButtonIcon} />}
-                    </TouchableOpacity>
+                   <TouchableOpacity
+                style={[
+                    styles.buyButton,
+                    selectedTime && styles.activeBuyButton,
+                ]}
+                disabled={!selectedTime}
+                onPress={toggleModal} // Open modal when button is pressed
+            >
+                <Text style={[
+                    styles.buyButtonText,
+                    selectedTime && styles.activeBuyButtonText,
+                ]}>
+                    Buy Ticket
+                </Text>
+                {selectedTime ? <ArrowRightIcon4 style={styles.buyButtonIcon} /> : <ArrowRightIcon3 style={styles.buyButtonIcon} />}
+            </TouchableOpacity>
+
+            {/* Ticket Purchase Modal */}
+            <TicketPurchaseModal visible={isModalVisible} onClose={toggleModal} startTimer={isModalVisible}  resetSelectedTime={resetSelectedTime} />
                 </View>
             </ScrollView>
         </SafeAreaView>

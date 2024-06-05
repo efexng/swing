@@ -15,6 +15,7 @@ import SavedScreen from './screens/SavedScreen';
 import CinemaScreen from './screens/CinemaScreen';
 import CinemaScreen2 from './screens/CinemaScreen2';
 import MovieShowTime from './screens/MovieShowTime';
+import TicketPurchaseModal from './screens/TicketPurchaseModal';
 import CinemaCompaniesList from './screens/CinemaCompaniesList';
 import CinemaScreenMovieList from './screens/CinemaScreenMovieList';
 import UploadScreen from './screens/UploadScreen';
@@ -43,6 +44,7 @@ export default function App() {
 <Stack.Screen name='CinemaScreen2' component={CinemaScreen2} />
 <Stack.Screen name='MovieShowTime' component={MovieShowTime} />
 <Stack.Screen name='CinemaScreenMovieList' component={CinemaScreenMovieList} />
+<Stack.Screen name='TicketPurchaseModal' component={TicketPurchaseModal} />
 
 
         <Stack.Screen name='SplashScreenTransition' component={SplashScreenTransition} />
