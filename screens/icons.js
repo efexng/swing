@@ -270,6 +270,14 @@ export const ChevronUpICon = () => (
   <Path d="M14.5999 7.54175L9.16657 2.10841C8.5249 1.46675 7.4749 1.46675 6.83324 2.10841L1.3999 7.54175" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </Svg>
 )
+export const SignoutIcon = () => (
+<Svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Path d="M9.3999 7.56023C9.7099 3.96023 11.5599 2.49023 15.6099 2.49023H15.7399C20.2099 2.49023 21.9999 4.28023 21.9999 8.75023V15.2702C21.9999 19.7402 20.2099 21.5302 15.7399 21.5302H15.6099C11.5899 21.5302 9.7399 20.0802 9.4099 16.5402" stroke="#D70303" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<Path d="M2.5 12H15.38" stroke="#D70303" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<Path d="M13.1499 8.6499L16.4999 11.9999L13.1499 15.3499" stroke="#D70303" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</Svg>
+
+)
   
 
   const icons = () => {

@@ -39,7 +39,7 @@ export default function App() {
         }}
       >
 
-        <Stack.Screen name='SavedScreen' component={SavedScreen} />
+<Stack.Screen name='MoreScreen' component={MoreScreen} />
 
         <Stack.Screen name='SplashScreenTransition' component={SplashScreenTransition} />
         <Stack.Screen name='OnBoardingScreen1' component={OnBoardingScreen1} />
@@ -54,9 +54,9 @@ export default function App() {
         <Stack.Screen name='MovieShowTime' component={MovieShowTime} />
         <Stack.Screen name='CinemaScreenMovieList' component={CinemaScreenMovieList} />
         <Stack.Screen name='TicketPurchaseModal' component={TicketPurchaseModal} />
+        <Stack.Screen name='SavedScreen' component={SavedScreen} />
 
      
-        <Stack.Screen name='MoreScreen' component={MoreScreen} />
         <Stack.Screen name='UploadScreen' component={UploadScreen} />
         <Stack.Screen name='NotificationScreen' component={NotificationScreen} />
 
