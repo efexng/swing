@@ -11,6 +11,10 @@ import SignupScreen from './screens/SignupScreen';
 import ExploreGenres from './screens/ExploreGenres';
 import HomeScreen from './screens/HomeScreen';
 import MoreScreen from './screens/MoreScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import ContactScreen from './screens/ContactScreen';
+import AboutScreen from './screens/AboutScreen';
+import FAQScreen from './screens/FAQScreen';
 import SavedScreen from './screens/SavedScreen';
 import CinemaScreen from './screens/CinemaScreen';
 import CinemaScreen2 from './screens/CinemaScreen2';
@@ -39,7 +43,12 @@ export default function App() {
         }}
       >
 
-<Stack.Screen name='MoreScreen' component={MoreScreen} />
+        <Stack.Screen name='MoreScreen' component={MoreScreen} />
+        <Stack.Screen name='ContactScreen' component={ContactScreen} />
+
+        <Stack.Screen name='ProfileScreen' component={ProfileScreen} />
+        <Stack.Screen name='AboutScreen' component={AboutScreen} />
+        <Stack.Screen name='FAQScreen' component={FAQScreen} />
 
         <Stack.Screen name='SplashScreenTransition' component={SplashScreenTransition} />
         <Stack.Screen name='OnBoardingScreen1' component={OnBoardingScreen1} />
