@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions} from 'react-native'
-import { CinemaIconFill, HomeIconNF, SavedIcon, MoreIcon, SearchIcon, ArrowRightIcon2, LocationIcon, ChevronDownICon, ChevronUpICon } from './icons'; // Ensure other icons are imported if needed
+import { CinemaIconFill, HomeIconNF, SavedIcon, MoreIcon, ArrowRightIcon2White, ArrowRightIcon2, LocationIcon, ChevronDownICon, ChevronUpICon } from './icons'; // Ensure other icons are imported if needed
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -63,7 +64,8 @@ const Companies = [
 
 const CinemaCompaniesList = () => {
     const navigation = useNavigation();
-    
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -71,6 +73,25 @@ const CinemaCompaniesList = () => {
     }
     return text;
   };
+
+  useEffect(() => {
+    // Load dark mode state from AsyncStorage
+    const loadDarkModeState = async () => {
+      try {
+        const darkModeState = await AsyncStorage.getItem('darkModeState');
+        if (darkModeState !== null) {
+          setIsDarkMode(JSON.parse(darkModeState));
+        }
+      } catch (error) {
+        console.error('Error loading dark mode state:', error);
+      }
+    };
+
+    loadDarkModeState();
+  }, []);
+
+
+  const textStyle = isDarkMode ? styles.textDark : styles.text;
 
   return (
     <FlatList
@@ -87,24 +108,24 @@ const CinemaCompaniesList = () => {
         })} >
           <View style={styles.CompanyAddress}>
             <View style={styles.CompanyAddressMain}>
-              <Text style={styles.CompanyAddressMaintxt}>{truncateText(item.Company, 19)}</Text>
+              <Text style={[styles.CompanyAddressMaintxt, textStyle]}>{truncateText(item.Company, 19)}</Text>
             </View>
             <View style={styles.CompanyMoviesInfo}>
               <Text style={styles.CompanyMovies}>{item.CompanyMovies}</Text>
-              <Text style={styles.CompanyMoviesShowTime}>{item.CompanyMoviesShowTime}</Text>
+              <Text style={[styles.CompanyMoviesShowTime, textStyle]}>{item.CompanyMoviesShowTime}</Text>
             </View>
           </View>
           <View style={styles.ArrowRightIcon2}>
-            <ArrowRightIcon2 />
+            {isDarkMode ? <ArrowRightIcon2White /> : <ArrowRightIcon2 />}
           </View>
           <View style={styles.CompanyAddress}>
             <View style={styles.CompanyAddressMain}>
-              <Text style={styles.CompanyAddressMaintxtMedium}>{truncateText(item.CompanyAddress, 30)}</Text>
+              <Text style={[styles.CompanyAddressMaintxtMedium, textStyle]}>{truncateText(item.CompanyAddress, 30)}</Text>
             </View>
             <View style={styles.CompanyMoviesInfo}>
-              <Text style={styles.CompanyAddressDistance}>{item.CompanyAddressDistance}</Text>
-              <Ionicons style={styles.EllipseIcon} name='ellipse' size={4} />
-              <Text style={styles.CompanyAddressDistanceTime}>{item.CompanyAddressDistanceTime}</Text>
+              <Text style={[styles.CompanyAddressDistance, textStyle]}>{item.CompanyAddressDistance}</Text>
+              <Ionicons style={styles.EllipseIcon} name='ellipse' size={4}  color={isDarkMode ? 'white' : 'black'} />
+              <Text style={[styles.CompanyAddressDistanceTime, textStyle]}>{item.CompanyAddressDistanceTime}</Text>
             </View>
           </View>
           <View style={styles.separator} />
@@ -182,5 +203,8 @@ const styles = StyleSheet.create({
     marginVertical: 1,
     width: '100%',
     marginBottom: 40
+  },
+  textDark: {
+    color: '#fff'
   },
 })

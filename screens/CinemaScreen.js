@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, Dimensions, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CinemaIconFill, HomeIconNF, SavedIcon, MoreIcon, SearchIcon, LocationIcon, ChevronDownICon, ChevronUpICon } from './icons'; // Ensure other icons are imported if needed
+import { CinemaIconFill, HomeIconNF, SavedIcon, MoreIcon, SearchIcon, LocationIcon, ChevronDownICon, ChevronUpICon, SavedIconWhite, MoreIconFillWhite, HomeIconWhite, SearchIconWhite, LocationIconWhite, ChevronUpIConWhite, ChevronDownIConWhite } from './icons'; // Ensure other icons are imported if needed
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CinemaCompaniesList from './CinemaCompaniesList';
 import CinemaScreenMovieList from './CinemaScreenMovieList';
 
@@ -16,6 +16,7 @@ const Genre = [
 const CinemaScreen = () => {
   const navigation = useNavigation();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleDropdown = () => {
     setIsExpanded(!isExpanded);
@@ -26,17 +27,41 @@ const CinemaScreen = () => {
     setIsExpanded(false);
   };
 
+  useEffect(() => {
+    // Load dark mode state from AsyncStorage
+    const loadDarkModeState = async () => {
+      try {
+        const darkModeState = await AsyncStorage.getItem('darkModeState');
+        if (darkModeState !== null) {
+          setIsDarkMode(JSON.parse(darkModeState));
+        }
+      } catch (error) {
+        console.error('Error loading dark mode state:', error);
+      }
+    };
+
+    loadDarkModeState();
+  }, []);
+
+ 
+
+  const containerStyle = isDarkMode ? [styles.container, styles.darkContainer] : styles.container;
+  const textStyle = isDarkMode ? styles.textDark : styles.text;
+  const bottomContainerStyle = isDarkMode ? [styles.bottomContainer, styles.darkBottomContainer] : styles.bottomContainer;
+  const iconTextStyle = isDarkMode ? [styles.iconText, styles.darkIconText] : styles.iconText;
+  const dropdownContainerStyle = isDarkMode ? [styles.dropdownContainer, styles.darkdropdownContainer] : styles.dropdownContainer;
+  const activeGenreStyle = isDarkMode ? [styles.activeGenre, styles.darkGenre] : styles.activeGenre;
   return (
     <>
-      <View style={styles.container}>
+      <View style={containerStyle}>
         <View style={styles.separatorTop} />
         <View style={styles.header}>
           <View style={styles.searchContainer}>
-            <SearchIcon style={styles.searchIcon} />
+            {isDarkMode ? <SearchIconWhite style={styles.searchIcon} /> : <SearchIcon style={styles.searchIcon}  />}
             <TextInput
               style={styles.searchBar}
               placeholder="Search for more cinemas and movies"
-              placeholderTextColor="#888"
+              placeholderTextColor={isDarkMode ? '#ffffff' : '#000000'}
             />
           </View>
         </View>
@@ -46,40 +71,43 @@ const CinemaScreen = () => {
           ListHeaderComponent={() => (
             <View>
               <View style={styles.headercontent}>
-                <Text style={styles.Company}>Cinemas</Text>
+                <Text style={[styles.Company, textStyle]}>Cinemas in your area</Text>
                 <View style={styles.CompanyContents}>
                   <CinemaCompaniesList />
                 </View>
 
-                <TouchableOpacity onPress={() => navigation.navigate('OnBoardingScreen2')} style={styles.skipButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')} style={styles.skipButton}>
                   <Text style={styles.skipText}>Change Location</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.headercontentsub3}>
-                <Text style={styles.headercontentsub2txt}>Movies showing this week</Text>
+                <Text style={[styles.headercontentsub2txt, textStyle]}>Movies showing this week</Text>
               </View>
               <View style={styles.headercontentsubs3}>
                 <View style={styles.headercontentsubinner3}>
-                  <LocationIcon />
-                  <Text style={styles.headercontentsubinner3txt}>Near Gwagwalada, Abuja </Text>
+                {isDarkMode ? <LocationIconWhite /> : <LocationIcon />}
+                  <Text style={[styles.headercontentsubinner3txt, textStyle]}>Near Gwagwalada, Abuja </Text>
                 </View>
 
-                <TouchableOpacity onPress={toggleDropdown} style={[styles.headercontentsubinner4, isExpanded && styles.activeGenre ]}>
-                <Text style={[styles.headercontentsubinner3txt2, isExpanded ]}>{isExpanded ? "All Genre" : "All Genre"}</Text>
+                <TouchableOpacity onPress={toggleDropdown} style={[styles.headercontentsubinner4, isExpanded && activeGenreStyle ]}>
+                <Text style={[styles.headercontentsubinner3txt2, textStyle, isExpanded ]}>{isExpanded ? "All Genre" : "All Genre"}</Text>
                   <View >
-                    {isExpanded ? <ChevronUpICon /> : <ChevronDownICon />}
+                  {isExpanded 
+            ? (isDarkMode ? <ChevronUpIConWhite /> : <ChevronUpICon />) 
+            : (isDarkMode ? <ChevronDownIConWhite /> : <ChevronDownICon />)
+        }
                   </View>
                 </TouchableOpacity>
               </View>
              <View style={styles.dropdown}>
              {isExpanded && (
-                <View style={styles.dropdownContainer}>
+                <View style={dropdownContainerStyle}>
                   <FlatList
                     data={Genre}
                     keyExtractor={(item) => item}
                     renderItem={({ item }) => (
                       <TouchableOpacity style={styles.genreItem} onPress={() => selectGenre(item)}>
-                        <Text style={styles.genreText}>{item}</Text>
+                        <Text style={[styles.genreText, textStyle]}>{item}</Text>
                       </TouchableOpacity>
                     )}
                   />
@@ -87,7 +115,7 @@ const CinemaScreen = () => {
               )}
              </View>
               <View style={styles.headercontentsubs4}>
-                <Text style={styles.headercontentsubs4txt}>Genesis Cinema</Text>
+                <Text style={[styles.headercontentsubs4txt, textStyle]}>Genesis Cinema</Text>
               </View>
               <View style={styles.moviescontainer}>
                 <CinemaScreenMovieList />
@@ -98,7 +126,7 @@ const CinemaScreen = () => {
                 </TouchableOpacity>
               </View>
               <View style={styles.headercontentsubs4}>
-                <Text style={styles.headercontentsubs5txt}>SILVERBIRD ENTERTAINMENT CENTER</Text>
+                <Text style={[styles.headercontentsubs5txt, textStyle]}>SILVERBIRD ENTERTAINMENT CENTER</Text>
               </View>
               <View style={styles.moviescontainer}>
                 <CinemaScreenMovieList />
@@ -115,22 +143,22 @@ const CinemaScreen = () => {
         />
       </View>
 
-      <View style={styles.bottomContainer}>
+      <View style={bottomContainerStyle}>
         <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.iconContainer}>
-          <HomeIconNF />
-          <Text style={styles.iconText}>Home</Text>
+        {isDarkMode ? <HomeIconWhite /> : <HomeIconNF />}
+          <Text style={[styles.iconText, iconTextStyle]}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer}>
           <CinemaIconFill />
           <Text style={styles.iconTextCinema}>Cinema</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SavedScreen')} style={styles.iconContainer}>
-          <SavedIcon />
-          <Text style={styles.iconText}>Saved</Text>
+        {isDarkMode ? <SavedIconWhite /> : <SavedIcon />}
+          <Text style={[styles.iconText, iconTextStyle]}>Saved</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MoreScreen')} style={styles.iconContainer}>
-          <MoreIcon />
-          <Text style={styles.iconText}>More</Text>
+        {isDarkMode ? <MoreIconFillWhite /> : <MoreIcon />}
+          <Text style={[styles.iconText, iconTextStyle]}>More</Text>
         </TouchableOpacity>
       </View>
     </>
@@ -144,6 +172,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  darkContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(23,25,28,255)',
   },
   separatorTop: {
     height: 1,
@@ -325,6 +357,20 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     width: '100%',
   },
+  darkBottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: '#',
+    shadowColor: '#000',
+    width: '100%',
+    backgroundColor: '#17161a',
+    shadowColor: 'rgba(245, 245, 245, 0.1)',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 1.25,
+    shadowRadius: 7.84,
+    elevation: 5,
+  },
   iconContainer: {
     alignItems: 'center',
     marginTop: 20,
@@ -335,6 +381,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit_400Regular',
     fontSize: 14,
     lineHeight: 16.8
+  },
+  darkIconText: {
+    color: 'white',
   },
   iconTextCinema: {
     color: '#5303FF',
@@ -354,8 +403,21 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Centering the items horizontally
     zIndex: 99,
   },
+  darkdropdownContainer: {
+    position: 'absolute',
+    right: 0, // Adjust according to your layout
+    width: 130,
+    backgroundColor: '#222225',
+    borderTopWidth: .5,
+    borderColor: '#FFFFFF',
+    alignItems: 'center', // Centering the items horizontally
+    zIndex: 99,
+  },
   activeGenre: {
     backgroundColor: 'white',
+  },  
+  darkGenre: {
+    backgroundColor: 'rgba(23,25,28,255)',
   },  
   genreItem: {
     padding: 10,
@@ -410,5 +472,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontFamily: 'Outfit_500Medium'
+  },
+  textDark: {
+    color: '#fff'
   },
 });

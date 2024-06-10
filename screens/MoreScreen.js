@@ -118,7 +118,7 @@ const MoreScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SavedScreen')} style={styles.iconContainer}>
           {isDarkMode ? <SavedIconWhite /> : <SavedIcon />}
-          <Text style={iconTextStyle}>Save</Text>
+          <Text style={iconTextStyle}>Saved</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer}>
           <MoreIconFill />

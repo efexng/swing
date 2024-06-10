@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, FlatList, Image, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -42,6 +43,27 @@ const Movies = [
   
 
 const CinemaScreenMovieList = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Load dark mode state from AsyncStorage
+    const loadDarkModeState = async () => {
+      try {
+        const darkModeState = await AsyncStorage.getItem('darkModeState');
+        if (darkModeState !== null) {
+          setIsDarkMode(JSON.parse(darkModeState));
+        }
+      } catch (error) {
+        console.error('Error loading dark mode state:', error);
+      }
+    };
+
+    loadDarkModeState();
+  }, []);
+
+  const textStyle = isDarkMode ? styles.textDark : styles.text;
+
+
   return (
     <FlatList
                   data={Movies}
@@ -50,8 +72,8 @@ const CinemaScreenMovieList = () => {
                   renderItem={({ item }) => (
                     <View style={styles.movieItem}>
                       <Image source={item.image} style={styles.movieImage} />
-                      <Text style={styles.movieTitle}>{item.title}</Text>
-                      {item.subtitle && <Text style={styles.movieSubtitle}>{item.subtitle}</Text>}
+                      <Text style={[styles.movieTitle, textStyle]}>{item.title}</Text>
+                      {item.subtitle && <Text style={[styles.movieSubtitle, textStyle]}>{item.subtitle}</Text>}
                     </View>
                   )}
                   showsHorizontalScrollIndicator={false}
@@ -312,5 +334,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 14,
         fontFamily: 'Outfit_500Medium'
+      },
+      textDark: {
+        color: '#fff'
       },
 })

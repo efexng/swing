@@ -25,16 +25,6 @@ const ContactScreen = () => {
     loadDarkModeState();
   }, []);
 
-  const toggleDarkMode = async () => {
-    try {
-      const newDarkModeState = !isDarkMode;
-      setIsDarkMode(newDarkModeState);
-      await AsyncStorage.setItem('darkModeState', JSON.stringify(newDarkModeState));
-    } catch (error) {
-      console.error('Error saving dark mode state:', error);
-    }
-  };
-
   const containerStyle = isDarkMode ? styles.containerDark : styles.container;
   const textStyle = isDarkMode ? styles.textDark : styles.text;
   const contactInfoBackground = isDarkMode ? 'rgba(34, 34, 37, 1)' : 'white';

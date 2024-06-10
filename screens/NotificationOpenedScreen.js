@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
     },
     genesisCinemaContainer1: {
-        width: screenWidth > 375 ? 363 : 343, 
+        width: '100%',
         height: 174,
         backgroundColor: 'white',
         shadowColor: '#000',

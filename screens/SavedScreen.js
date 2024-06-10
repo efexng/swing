@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, Image, Modal, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-import { CinemaIcon, HomeIconNF, SavedIconFill, MoreIcon, SearchIcon, EllipseVerticalSavedIcon, ModalShareIcon, ModalFlagIcon, TrashIcon } from './icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CinemaIcon, HomeIconNF, SavedIconFill, MoreIcon, SearchIcon,SearchIconWhite, EllipseVerticalSavedIcon, ModalShareIcon, ModalFlagIcon, TrashIcon, CinemaIconWhite, HomeIconWhite, MoreIconFillWhite, ModalFlagIconWhite, ModalShareIconWhite } from './icons';
 import { useNavigation } from '@react-navigation/native';
 
+//to do// image width----
 
 const Movies = [
   {
@@ -63,6 +64,7 @@ const SavedScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredMovies, setFilteredMovies] = useState(Movies);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleMoviePress = () => {
     setShowMovies(true);
@@ -102,66 +104,93 @@ const SavedScreen = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+
+  useEffect(() => {
+    const loadDarkModeState = async () => {
+      try {
+        const darkModeState = await AsyncStorage.getItem('darkModeState');
+        if (darkModeState !== null) {
+          setIsDarkMode(JSON.parse(darkModeState));
+        }
+      } catch (error) {
+        console.error('Error loading dark mode state:', error);
+      }
+    };
+
+    loadDarkModeState();
+  }, []);
+
+
+
+  const containerStyle = isDarkMode ? styles.containerDark : styles.container;
+  const textStyle = isDarkMode ? styles.textDark : styles.text;
+  const bottomContainerStyle = isDarkMode ? [styles.bottomContainer, styles.darkBottomContainer] : styles.bottomContainer;
+  const iconTextStyle = isDarkMode ? [styles.iconText, styles.darkIconText] : styles.iconText;
+  const searchContainerStyle = isDarkMode ?  styles.darksearchContainer : styles.searchContainer;
+  const boxContainerStyle = isDarkMode ?  styles.darkboxContainer : styles.boxContainer;
+  const modalContentStyle = isDarkMode ?  styles.darkmodalContent : styles.modalContent;
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={containerStyle}>
       <View style={styles.header}>
-        <Text style={styles.notificationText}>Your Library</Text>
+        <Text style={[styles.notificationText, textStyle]}>Your Library</Text>
       </View>
       <View style={styles.separator} />
 
       {showSearchBar ? (
-        <View style={styles.searchContainer}>
+        <View style={searchContainerStyle}>
           <View style={styles.search}>
-            <SearchIcon />
+          {isDarkMode ? <SearchIconWhite /> : <SearchIcon />}
           </View>
           <TextInput
-            style={styles.searchInput}
+            style={[styles.searchInput, textStyle]}
             placeholder="Search..."
+            placeholderTextColor={isDarkMode ? '#ffffff' : '#000000'}
             autoFocus={true}
             onChangeText={handleSearch}
             value={searchQuery}
           />
           <TouchableOpacity onPress={handleCancelPress}>
-            <Text style={styles.cancelText}>Cancel</Text>
+            <Text style={[styles.cancelText, textStyle]}>Cancel</Text>
           </TouchableOpacity>
         </View>
       ) : (
-        <View style={styles.boxContainer}>
+        <View style={boxContainerStyle}>
           <TouchableOpacity style={styles.boxItemsearch} onPress={handleSearchIconPress}>
-            <SearchIcon />
+          {isDarkMode ? <SearchIconWhite /> : <SearchIcon />}
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.boxItem,
               activeSection === 'All' ? styles.activeBoxItem : null,
-              { backgroundColor: activeSection === 'All' ? '#5303FF' : '#fff' },
+              { backgroundColor: activeSection === 'All' ? (isDarkMode ? '#5303FF' : '#5303FF') : (isDarkMode ? '#222225' : '#fff') },
             ]}
             onPress={handleAllPress}
           >
-            <Text style={[styles.boxText, activeSection === 'All' ? { color: 'white' } : null]}>All</Text>
+            <Text style={[styles.boxText, textStyle, activeSection === 'All' ? { color: 'white' } : null]}>All</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.boxItem,
               activeSection === 'Movies' ? styles.activeBoxItem : null,
-              { backgroundColor: activeSection === 'Movies' ? '#5303FF' : '#fff' },
+              { backgroundColor: activeSection === 'Movies' ? (isDarkMode ? '#5303FF' : '#5303FF') : (isDarkMode ? '#222225' : '#fff') },
             ]}
             onPress={handleMoviePress}
           >
             <View style={styles.unread}>
-              <Text style={[styles.boxText, activeSection === 'Movies' ? { color: 'white' } : null]}>Movies</Text>
+              <Text style={[styles.boxText, textStyle, activeSection === 'Movies' ? { color: 'white' } : null]}>Movies</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
               styles.boxItem,
               activeSection === 'Shows' ? styles.activeBoxItem : null,
-              { backgroundColor: activeSection === 'Shows' ? '#5303FF' : '#fff' },
+              { backgroundColor: activeSection === 'Shows' ? (isDarkMode ? '#5303FF' : '#5303FF') : (isDarkMode ? '#222225' : '#fff') },
             ]}
             onPress={handleShowsPress}
           >
             <View style={styles.unread}>
-              <Text style={[styles.boxText, activeSection === 'Shows' ? { color: 'white' } : null]}>Shows</Text>
+              <Text style={[styles.boxText,textStyle , activeSection === 'Shows' ? { color: 'white' } : null]}>Shows</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -169,10 +198,10 @@ const SavedScreen = () => {
 
       {filteredMovies.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={styles.oopsText}>Oops</Text>
-          <Text style={styles.emptyText}>Nothing has been added</Text>
+          <Text style={[styles.oopsText, textStyle]}>Oops</Text>
+          <Text style={[styles.emptyText, textStyle]}>Nothing has been added</Text>
           <TouchableOpacity style={styles.searchButton} onPress={() => navigation.navigate('HomeScreen')}>
-            <Text style={styles.searchButtonText}>Search for movies</Text>
+            <Text style={[styles.searchButtonText, textStyle]}>Search for movies</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -205,7 +234,7 @@ const SavedScreen = () => {
                     <TouchableOpacity onPress={() => navigation.navigate('UploadScreenExtractMatch')}>
                       <Image source={item.image} style={styles.movieImage} />
                     </TouchableOpacity>
-                    <Text style={styles.movieTitle}>{item.title}</Text>
+                    <Text style={[styles.movieTitle, textStyle]}>{item.title}</Text>
                     <Text style={styles.movieRealeasedate}>{item.Realeasedate}</Text>
                   </View>
                 );
@@ -220,8 +249,8 @@ const SavedScreen = () => {
                     <TouchableOpacity onPress={() => navigation.navigate('UploadScreenExtractMatch')}>
                       <Image source={item.image} style={styles.movieImage} />
                     </TouchableOpacity>
-                    <Text style={styles.movieTitle}>{item.title}</Text>
-                    <Text style={styles.movieRealeasedate}>{item.Realeasedate}</Text>
+                    <Text style={[styles.movieTitle, textStyle]}>{item.title}</Text>
+                    <Text style={[styles.movieRealeasedate, textStyle]}>{item.Realeasedate}</Text>
                   </View>
                 );
               }
@@ -232,38 +261,38 @@ const SavedScreen = () => {
 
       <Modal animationType="fade" transparent={true} visible={isModalVisible}>
         <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPress={toggleModal}></TouchableOpacity>
-        <View style={styles.modalContent}>
+        <View style={modalContentStyle}>
           <TouchableOpacity style={styles.modalOption}>
             <TrashIcon />
             <Text style={[styles.modalOptionText, { color: 'red' }]}>Remove from Library</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.modalOption}>
-            <ModalShareIcon />
-            <Text style={styles.modalOptionText}>Share</Text>
+          {isDarkMode ? <ModalShareIconWhite /> : <ModalShareIcon />}
+            <Text style={[styles.modalOptionText, textStyle]}>Share</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.modalOption}>
-            <ModalFlagIcon />
-            <Text style={styles.modalOptionText}>Report</Text>
+          {isDarkMode ? <ModalFlagIconWhite /> : <ModalFlagIcon />}
+            <Text style={[styles.modalOptionText, textStyle]}>Report</Text>
           </TouchableOpacity>
         </View>
       </Modal>
 
-      <View style={styles.bottomContainer}>
+      <View style={bottomContainerStyle}>
         <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.iconContainer}>
-          <HomeIconNF />
-          <Text style={styles.iconText}>Home</Text>
+        {isDarkMode ? <HomeIconWhite /> : <HomeIconNF />}
+          <Text style={iconTextStyle}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('CinemaScreen')} style={styles.iconContainer}>
-          <CinemaIcon />
-          <Text style={styles.iconText}>Cinema</Text>
+        {isDarkMode ? <CinemaIconWhite /> : <CinemaIcon />}
+          <Text style={iconTextStyle}>Cinema</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconContainer}>
           <SavedIconFill />
           <Text style={styles.iconTextSaved}>Saved</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MoreScreen')} style={styles.iconContainer}>
-          <MoreIcon />
-          <Text style={styles.iconText}>More</Text>
+        {isDarkMode ? <MoreIconFillWhite /> : <MoreIcon />}
+          <Text style={iconTextStyle}>More</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -275,6 +304,10 @@ export default SavedScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerDark: {
+    flex: 1,
+    backgroundColor: 'rgba(23,25,28,255)',
   },
   header: {
     flexDirection: 'row',
@@ -305,6 +338,14 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     borderTopColor: 'black',
   },
+  darkBottomContainer: {
+    backgroundColor: '#17161a',
+    shadowColor: 'rgba(245, 245, 245, 0.1)',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 1.25,
+    shadowRadius: 7.84,
+    elevation: 5,
+  },
   iconContainer: {
     alignItems: 'center',
     marginTop: 20,
@@ -327,6 +368,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
+    marginVertical: 20,
+    marginHorizontal: 40,
+    borderRadius: 10,
+  },
+  darkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#222225',
     marginVertical: 20,
     marginHorizontal: 40,
     borderRadius: 10,
@@ -364,6 +414,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     borderRadius: 10,
   },
+  darksearchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#222225',
+    marginVertical: 20,
+    marginHorizontal: 40,
+    borderRadius: 10,
+  },
   search: {
     alignItems: 'center',
     marginHorizontal: 10,
@@ -394,7 +452,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   movieImage: {
-    width: 163,
+    width: screenWidth > 375 ? 163 : 193,
     height: 210,
     borderRadius: 10,
   },
@@ -437,6 +495,18 @@ const styles = StyleSheet.create({
     gap: 20,
     margin: 'auto',
   },
+  darkmodalContent: {
+    backgroundColor: '#222225',
+    width: screenWidth > 375 ? 233 : 211,
+    height: 180,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(80, 85, 92, 1)',
+    padding: 20,
+    gap: 20,
+    margin: 'auto',
+    marginBottom: 150,
+  },
   modalOption: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -477,5 +547,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit_500Medium',
     fontSize: 16,
     textAlign: 'center',
+  },
+  textDark: {
+    color: '#fff'
+  },
+  darkIconText: {
+    color: 'white',
   },
 });
