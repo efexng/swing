@@ -133,15 +133,17 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     position: 'absolute',
-    top: 550,
+    top: 'auto',
+    bottom: '30%',
     zIndex: 2,
   },
   text: {
     marginTop: 20,
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     zIndex: 2,
+    fontFamily: 'Outfit_400Regular'
   },
 });
 

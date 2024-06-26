@@ -51,6 +51,9 @@ const CinemaScreen = () => {
   const iconTextStyle = isDarkMode ? [styles.iconText, styles.darkIconText] : styles.iconText;
   const dropdownContainerStyle = isDarkMode ? [styles.dropdownContainer, styles.darkdropdownContainer] : styles.dropdownContainer;
   const activeGenreStyle = isDarkMode ? [styles.activeGenre, styles.darkGenre] : styles.activeGenre;
+  const textStyle2 = isDarkMode ? styles.textDark : styles.text;
+
+
   return (
     <>
       <View style={containerStyle}>
@@ -59,7 +62,7 @@ const CinemaScreen = () => {
           <View style={styles.searchContainer}>
             {isDarkMode ? <SearchIconWhite style={styles.searchIcon} /> : <SearchIcon style={styles.searchIcon}  />}
             <TextInput
-              style={styles.searchBar}
+              style={[styles.searchBar, textStyle2]}
               placeholder="Search for more cinemas and movies"
               placeholderTextColor={isDarkMode ? '#ffffff' : '#000000'}
             />
@@ -72,15 +75,16 @@ const CinemaScreen = () => {
             <View>
               <View style={styles.headercontent}>
                 <Text style={[styles.Company, textStyle]}>Cinemas in your area</Text>
-                <View style={styles.CompanyContents}>
-                  <CinemaCompaniesList />
-                </View>
+        
+                <CinemaCompaniesList />
 
                 <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')} style={styles.skipButton}>
                   <Text style={styles.skipText}>Change Location</Text>
                 </TouchableOpacity>
               </View>
-              <View style={styles.headercontentsub3}>
+             
+             <View style={styles.headercontainer}>
+             <View style={styles.headercontentsub3}>
                 <Text style={[styles.headercontentsub2txt, textStyle]}>Movies showing this week</Text>
               </View>
               <View style={styles.headercontentsubs3}>
@@ -136,6 +140,8 @@ const CinemaScreen = () => {
                   <Text style={styles.moviesbtntxt}>See All</Text>
                 </TouchableOpacity>
               </View>
+             </View>
+
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -176,13 +182,14 @@ const styles = StyleSheet.create({
   darkContainer: {
     flex: 1,
     backgroundColor: 'rgba(23,25,28,255)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   separatorTop: {
     height: 1,
-    backgroundColor: 'rgba(17, 34, 17, 0.1287)',
-    marginVertical: 1,
+    backgroundColor: 'gray',
     width: '100%',
-    marginTop: 90,
+    marginTop: screenWidth <= 375 ? 50 : 80,
     marginBottom: 10,
   },
   header: {
@@ -211,17 +218,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
     marginTop: 20,
+  },
+  headercontainer: {
+    flexDirection: 'column',
+    marginLeft: 10
   },
   Company: {
     fontFamily: 'Outfit_600SemiBold',
     fontSize: 20,
     marginBottom: 30,
-  },
-  CompanyContents: {
-    flexDirection: 'column',
-    width: screenWidth > 375 ? 363 : 343,
   },
   CompanyAddress: {
     flexDirection: 'row',
@@ -346,7 +352,7 @@ const styles = StyleSheet.create({
   headercontentsubs5txt: {
     fontFamily: 'Outfit_600SemiBold',
     fontSize: 20,
-    width: screenWidth > 375 ? 363 : 343,
+    width:'90%',
     color: 'rgba(81, 79, 79, 1)',
   },
   bottomContainer: {
@@ -374,7 +380,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 50,
+    marginBottom: screenWidth <= 375 ? 10 : 40,
   },
   iconText: {
     color: '#17161A',
@@ -427,35 +433,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit_500Medium',
     textAlign: 'center'
   },
-  movieItem: {
-    marginRight: 10, 
-    alignItems: 'center', 
-  },
-  movieImage: {
-    width: 165,
-    height: 200,
-    borderRadius: 10,
-  },
-  movieTitle: {
-    marginTop: 5,
-    color: '#514F4F',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    width: 165, 
-  },
-  movieSubtitle: {
-    fontSize: 14,
-    color: '#888',
-    textAlign: 'center',
-    width: 165, 
-  },
-  moviesList: {
-    paddingVertical: 20,
-    alignItems: 'flex-start', 
-  },
   moviescontainer: {
-    width: screenWidth > 375 ? 363 : 343,
+    width: screenWidth  <= 375 ? 343 : 363,
   },
   moviesbtncontainer: {
     alignItems: 'center',

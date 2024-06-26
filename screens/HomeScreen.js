@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Modal, ScrollView, Dimensions } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
@@ -7,10 +7,13 @@ import styles from './HomeScreenStyle';
 import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon, ModalSaveIcon,ModalShareIcon, ModalFlagIcon, ModalStopIcon, EllipseVerticalHomeIcon } from './icons';
 import { useFonts, Outfit_100Thin, Outfit_200ExtraLight, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold, Outfit_800ExtraBold, Outfit_900Black } from '@expo-google-fonts/outfit';
 
+
+const screenWidth = Dimensions.get('window').width;
+
 const videoData = [
   {
     id: 1,
-    source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715284562/m0n6tqk9b6jqaliqvmho.mp4',
+    source: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     title: 'BEETLEJUICE BEETLEJUICE _ Official Teaser Trailer',
     description: 'In Cinemas on January 19',
     header: 'Cinema',
@@ -20,49 +23,49 @@ const videoData = [
     source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715367171/vtdpihagqxlurrymvxch.mp4',
     title: 'Monkey Man Official Trailer 2',
     description: 'Showing on HBO April 15',
-    header: 'Netflix',
+    header: 'Cinema',
   },
   {
     id: 3,
-    source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715373759/etsxpjmodymbmnngp4ip.mp4',
+    source: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     title: 'Spider-Man: Beyond the Spider-Verse First Trailer (2024)',
     description: 'Showing on HBO April 15',
-    header: 'HBO',
+    header: 'Cinema',
   },
   {
     id: 4,
     source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715397809/zs4rmpsaejb9qfum6ifz.mp4',
     title: 'Dune Part Two  Official Trailer',
     description: 'In Cinemas on January 19',
-    header: 'Disney +',
+    header: 'Netflix',
   },
   {
     id: 5,
     source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715397809/zs4rmpsaejb9qfum6ifz.mp4',
     title: 'Dune Part Two  Official Trailer',
     description: 'In Cinemas on January 19',
-    header: 'Disney +',
+    header: 'Netflix',
   },
   {
     id: 6,
-    source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715397809/zs4rmpsaejb9qfum6ifz.mp4',
+    source: 'https://res.cloudinary.com/dj55dp2oh/video/upload/v1718952835/xu9zu3e9tu7kj4alxul7.mp4',
     title: 'Dune Part Two  Official Trailer',
     description: 'In Cinemas on January 19',
-    header: 'Cinema',
+    header: 'Netflix',
   },
   {
     id: 7,
     source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715397809/zs4rmpsaejb9qfum6ifz.mp4',
     title: 'Dune Part Two  Official Trailer',
     description: 'In Cinemas on January 19',
-    header: 'Showmax',
+    header: 'Netflix',
   },
   {
     id: 8,
     source: 'https://res.cloudinary.com/dsspatqxn/video/upload/v1715397809/zs4rmpsaejb9qfum6ifz.mp4',
     title: 'Dune Part Two  Official Trailer',
     description: 'In Cinemas on January 19',
-    header: 'Disney +',
+    header: 'Netflix',
   },
 ];
 
@@ -83,12 +86,12 @@ const ProgressBar = ({ progress }) => {
 export default function HomeScreen() {
   const navigation = useNavigation();
   const videos = useRef([]);
+  const [videoList, setVideoList] = useState(videoData);
   const [progresses, setProgresses] = useState(Array(videoData.length).fill(0));
   const [activeHeader, setActiveHeader] = useState('Cinema');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const scrollViewRef = useRef(null);
   const [lastPlayedIndex, setLastPlayedIndex] = useState(-1);
-  
 
   const [focused, setFocused] = useState(true); // State to track focus
 
@@ -174,6 +177,13 @@ export default function HomeScreen() {
         }
       });
     }
+
+    // Check if the user has scrolled to the bottom of the list
+    const paddingToBottom = 20;
+    if (contentOffsetY + event.nativeEvent.layoutMeasurement.height + paddingToBottom >= event.nativeEvent.contentSize.height) {
+      // Append more videos to the video list
+      setVideoList((prevList) => [...prevList, ...videoData]);
+    }
   };
 
 
@@ -210,6 +220,7 @@ export default function HomeScreen() {
       return acc;
     }, {})
   );
+  
 
   // Toggle like for a specific video ID
   const toggleLike = (videoId) => {
@@ -273,66 +284,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        ref={scrollViewRef}
-        style={styles.videoScrollView}
-        showsVerticalScrollIndicator={false}
-        pagingEnabled
-        onScroll={handleScroll}
-      >
-        {videoData
-          .filter((item) => item.header === activeHeader) // Filter videos based on activeHeader
-          .map((item, index) => (
-            <View key={item.id}>
-              <View style={{ backgroundColor: 'black', borderRadius: 10, marginBottom: 5, }}>
-                <Video
-                  ref={(ref) => (videos.current[index] = ref)}
-                  style={{ height: 790, borderRadius: 10 }}
-                  source={{ uri: item.source }}
-                  useNativeControls
-                  resizeMode={ResizeMode.COVER}
-                  isLooping
-                  isMuted={videoStates[item.id] && videoStates[item.id].isMuted} // Use individual isMuted state for each video
-                  onPlaybackStatusUpdate={() => { }}
-                />
-                <ProgressBar progress={progresses[index]} />
-                <View style={styles.controlsContainer}>
-                  <TouchableOpacity
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    title={'Play'}
-                    onPress={() => togglePlayback(index)}
-                  />
-                </View>
-                <View style={styles.videodetails}>
-                  <Text style={styles.videodetailstext}>{item.title}</Text>
-                  <Text style={styles.videodetailstext2}>{item.description}</Text>
-                </View>
-                <View style={styles.videocontrols}>
-                <TouchableOpacity onPress={() => toggleLike(item.id)}>
-                    {videoStates[item.id]?.isLiked ? <HeartFillIcon /> : <HeartIcon />}
-                    {likeCount[item.id] > 0 && (
-                      <Text style={styles.likeCountText}>{formatLikeCount(likeCount[item.id])}</Text>
-                    )}
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => toggleMute(item.id)}>
-                    {videoStates[item.id]?.isMuted ? <VolumeSlashIcon /> : <VolumeIcon />}
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={toggleModal}>
-                  <EllipseVerticalHomeIcon />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          ))}
-
-      </ScrollView>
-
-
 
       <View style={styles.headercontainer}>
         <Text style={styles.headertitle}>What's Coming</Text>
@@ -362,6 +313,67 @@ export default function HomeScreen() {
         <Ionicons name="notifications-outline" size={24} color="#17161A" />
       </View>
      </TouchableOpacity>
+
+
+
+     <ScrollView
+        ref={scrollViewRef}
+        style={styles.videoScrollView}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={25}
+        pagingEnabled
+        onScroll={handleScroll}
+      >
+       {videoList
+  .filter((item) => item.header === activeHeader) // Filter videos based on activeHeader
+  .map((item, index) => (
+    <View key={`${item.id}-${index}`} style={styles.videoContainer}>
+      <Video
+        ref={(ref) => (videos.current[index] = ref)}
+        style={styles.video}
+        source={{ uri: item.source }}
+        useNativeControls
+        resizeMode={ResizeMode.COVER}
+        isLooping
+        isMuted={videoStates[item.id] && videoStates[item.id].isMuted} // Use individual isMuted state for each video
+        onPlaybackStatusUpdate={() => {}}
+      />
+      <ProgressBar progress={progresses[index]} />
+      <View style={styles.controlsContainer}>
+        <TouchableOpacity
+          style={{
+            width: '100%',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          title={'Play'}
+          onPress={() => togglePlayback(index)}
+        />
+      </View>
+      <View style={styles.videodetails}>
+        <Text style={styles.videodetailstext}>{item.title}</Text>
+        <Text style={styles.videodetailstext2}>{item.description}</Text>
+      </View>
+      <View style={styles.videocontrols}>
+        <TouchableOpacity onPress={() => toggleLike(item.id)}>
+          {videoStates[item.id]?.isLiked ? <HeartFillIcon /> : <HeartIcon />}
+          {likeCount[item.id] > 0 && (
+            <Text style={styles.likeCountText}>{formatLikeCount(likeCount[item.id])}</Text>
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => toggleMute(item.id)}>
+          {videoStates[item.id]?.isMuted ? <VolumeSlashIcon /> : <VolumeIcon />}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleModal}>
+          <EllipseVerticalHomeIcon />
+        </TouchableOpacity>
+      </View>
+    </View>
+  ))}
+
+      </ScrollView>
+
 
       <Modal
         animationType="fade"

@@ -1,4 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
+const videoContainerHeight = windowHeight * 0.85; // Calculate 80% of the window height
+
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +23,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 50,
+    marginBottom: screenWidth <= 375 ? 10 : 40,
   },
   iconText: {
     color: '#17161A',
@@ -31,6 +36,20 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit_600SemiBold',
     fontSize: 14,
     lineHeight: 16.8
+  },
+  videoContainer: {
+    backgroundColor: 'black',
+    width: windowWidth,
+    height: videoContainerHeight, // Use the calculated 80% height
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginBottom: screenWidth <= 375 ? 20 : screenWidth === 393 ? 15 : 20,
+    marginTop: screenWidth <= 375 ? -7 : 0,
+  },
+  video: {
+   height: '80%',
+   width: '100%',
   },
   videodetails: {
     position: 'absolute',
@@ -148,7 +167,7 @@ const styles = StyleSheet.create({
   },
   notificationContainer: {
     position: 'absolute',
-    top: 60,
+    top: screenWidth <= 375 ? 30 : 60,
     right: 0,
     flexDirection: 'column', // Changed to column layout
     alignItems: 'flex-end', // Aligned to the bottom right
@@ -160,6 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
   notification: {
     position: 'absolute',
@@ -187,14 +207,14 @@ const styles = StyleSheet.create({
   },
   headercontainer: {
     position: 'absolute',
-    top: 60,
+    top: screenWidth <= 375 ? 30 : 60,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 20,
     alignItems: 'center',
-    width: 400,
-    margin: 30,
+    margin: 10,
+    zIndex: 1
   },
   headertitle: {
     color: '#fff',

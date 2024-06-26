@@ -387,6 +387,12 @@ export const XIcon = () => (
 <Svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <Path fill-rule="evenodd" clip-rule="evenodd" d="M9.15189 12L6.12494 7.68551L2.33557 12H0.732422L5.41369 6.67151L0.732422 0H4.84839L7.70127 4.06637L11.2758 0H12.8789L8.4149 5.08172L13.2679 12H9.15189ZM10.9372 10.7836H9.85787L3.02788 1.21636H4.10733L6.8428 5.04718L7.31583 5.71193L10.9372 10.7836Z" fill="#5303FF"/>
 </Svg>
+)
+  
+export const UploadIcon = () => (
+<Svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Path d="M1.5 13L1.5 14C1.5 15.6569 2.84315 17 4.5 17L14.5 17C16.1569 17 17.5 15.6569 17.5 14L17.5 13M13.5 5L9.5 1M9.5 1L5.5 5M9.5 1L9.5 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</Svg>
 
 )
   

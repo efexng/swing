@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, Switch } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Switch, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CinemaIcon, HomeIconNF, SavedIcon, MoreIconFill, SignoutIcon, CinemaIconWhite, HomeIconWhite, SavedIconWhite, MoreIconFillWhite, SignoutIconWhite } from './icons';
 import { useNavigation } from '@react-navigation/native';
 
+
 const screenWidth = Dimensions.get('window').width;
+
 
 const MoreScreen = () => {
   const navigation = useNavigation();
@@ -45,7 +47,6 @@ const MoreScreen = () => {
   const profileContentsStyle = isDarkMode ? [styles.profilecontents, styles.darkProfileContents] : styles.profilecontents;
   const bottomContainerStyle = isDarkMode ? [styles.bottomContainer, styles.darkBottomContainer] : styles.bottomContainer;
   const profileContentSeparatorStyle = isDarkMode ? [styles.profilecontentseparator, styles.darkProfileContentSeparator] : styles.profilecontentseparator;
-  const profileContentSeparator2Style = isDarkMode ? [styles.profilecontentseparator2, styles.darkProfileContentSeparator2] : styles.profilecontentseparator2;
   const separatorStyle = isDarkMode ? [styles.separator, styles.darkSeparator] : styles.separator;
 
   const iconTextStyle = isDarkMode ? [styles.iconText, styles.darkIconText] : styles.iconText;
@@ -54,7 +55,8 @@ const MoreScreen = () => {
     <SafeAreaView style={containerStyle}>
       <View style={separatorStyle} />
 
-      <View style={styles.headercontent}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+     <View style={styles.headercontent}>
         <Text style={textStyle}>More</Text>
       </View>
 
@@ -76,7 +78,7 @@ const MoreScreen = () => {
               style={styles.switch}
             />
           </View>
-          <View style={profileContentSeparator2Style} />
+          <View style={profileContentSeparatorStyle} />
           <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('NotificationScreen')}>
             <Text style={optionTextStyle}>Notifications</Text>
           </TouchableOpacity>
@@ -93,7 +95,7 @@ const MoreScreen = () => {
           <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('AboutScreen')}>
             <Text style={optionTextStyle}>About Swing</Text>
           </TouchableOpacity>
-          <View style={profileContentSeparator2Style} />
+          <View style={profileContentSeparatorStyle} />
           <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('FAQScreen')}>
             <Text style={optionTextStyle}>FAQ</Text>
           </TouchableOpacity>
@@ -106,6 +108,7 @@ const MoreScreen = () => {
           <Text style={styles.siginoutbtncontentstxt}>Sign out</Text>
         </TouchableOpacity>
       </View>
+     </ScrollView>
 
       <View style={bottomContainerStyle}>
         <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.iconContainer}>
@@ -139,8 +142,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(23,25,28,255)',
   },
   separator: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'rgba(17, 34, 17, 0.1287)',
     width: '100%',
     alignSelf: 'center',
     marginTop: 20,
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 50,
+    marginBottom: screenWidth <= 375 ? 10 : 40,
   },
   iconText: {
     color: '#17161A',
@@ -201,7 +204,7 @@ const styles = StyleSheet.create({
   },
   profilecontent: {
     margin: 20,
-    width: screenWidth > 375 ? 383 : 343,
+    width: '90%',
   },
   profilecontentstxt: {
     fontSize: 18,
@@ -211,34 +214,24 @@ const styles = StyleSheet.create({
   profilecontents: {
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 15,
   },
   darkProfileContents: {
     backgroundColor: '#333',
   },
   profilecontentseparator: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
-    width: screenWidth > 375 ? 383 : 343,
-    alignSelf: 'center',
+    height: 1,
+    backgroundColor: 'gray',
   },
   darkProfileContentSeparator: {
-    borderBottomWidth: 1.5,
-  },
-  profilecontentseparator2: {
-    borderBottomWidth: 0.2,
-    borderBottomColor: 'gray',
-    width: screenWidth > 375 ? 383 : 343,
-    alignSelf: 'center',
-  },
-  darkProfileContentSeparator2: {
-    borderBottomWidth: 1.5,
+    height: 1,
+    backgroundColor: 'gray',
   },
   option: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 15,
+    paddingLeft: 20
   },
   optionText: {
     fontSize: 16,
@@ -246,6 +239,7 @@ const styles = StyleSheet.create({
   },
   switch: {
     marginLeft: 'auto',
+    marginRight: 20,
   },
   siginoutbtn: {
     alignSelf: 'center',
@@ -260,5 +254,8 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 16,
     fontFamily: 'Outfit_400Regular',
+  },
+  contentContainer: {
+    paddingBottom: 90, // Adjust the padding value as needed
   },
 });

@@ -1,9 +1,13 @@
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, Text, View, TouchableOpacity,Dimensions, ScrollView } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import * as VideoPicker from 'expo-image-picker';
 import { Video } from 'expo-av';
+import {UploadIcon} from './icons'
+
+const screenWidth = Dimensions.get('window').width;
+
 
 const ProgressBar = ({ progress }) => {
   const fillWidth = `${progress}%`;
@@ -103,17 +107,18 @@ const UploadScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.uploadBoxContainer}>
-        <View style={styles.overlayTextContainer}>
-          <Text style={styles.overlayText}>Searching for a movie?</Text>
-          <Text style={styles.overlayTextup}>
+        <View>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="close-outline" size={30} color="white" style={styles.closeIcon} />
+        </TouchableOpacity>
+       <View style={styles.overlayBoxTextContainer}>
+          <Text style={styles.overlayTextSearch}>Searching for a movie?</Text>
+          <Text style={styles.overlayTexttime}>
             We need you to upload a 10-20 seconds video from the movie first
           </Text>
+       </View>
         </View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="close-outline" size={24} color="white" style={styles.closeIcon} />
-        </TouchableOpacity>
-        <View style={styles.topPlaceholder} />
-        <View style={styles.overlay}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
           {mediaList.map((media, index) => (
             <View key={index} style={styles.mediaContainer}>
               <Video
@@ -154,7 +159,7 @@ const UploadScreen = () => {
           {mediaList.length === 0 && (
             <TouchableOpacity style={styles.addMoreButton} onPress={() => addMedia('video')}>
               <View style={styles.overlayBox}>
-                <Ionicons name="share" size={24} color="white" />
+                <UploadIcon />
                 <Text style={styles.overlayBoxText}>Browse Files</Text>
               </View>
             </TouchableOpacity>
@@ -178,12 +183,14 @@ const UploadScreen = () => {
           )}
 
           {mediaList.length === 0 && (
-            <Text style={styles.overlayTextdown}>
-              You can upload up to 3 videos from the same movie to enhance your search.
-            </Text>
+            <View style={styles.overlayBoxTextdown}>
+             <Text style={styles.overlayTextdown}>
+             You can upload up to 2 videos from the same movie to enhance your search.
+             </Text>
+            </View>
           )}
 
-        </View>
+        </ScrollView>
       </View>
       {/* End of UploadBoxContainer */}
 
@@ -222,8 +229,8 @@ const styles = StyleSheet.create({
   outerCircle: {
     flexDirection: 'column',
     marginRight: 10,
-    width: 600,
-    height: 600,
+    width:  screenWidth  <= 375 ? 500 : 600,
+    height: screenWidth  <= 375 ? 500 : 600,
     borderRadius: 300,
     borderWidth: 30,
     borderColor: 'white',
@@ -253,38 +260,29 @@ const styles = StyleSheet.create({
     bottom: -30,
     right: -50,
   },
-  overlay: {
-    margin: 'auto',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   closeIcon: {
-    position: 'absolute', // Position the close icon absolutely
-    top: 60, // Adjust top spacing as needed
-    right: 20, // Adjust right spacing as needed
+    marginLeft: 'auto',
+    marginRight: 20,
+    marginTop: screenWidth  <= 375 ? 50 : 90,
+    zIndex: 1,
   },
-  overlayText: {
-    color: 'white',
-    width: 343,
+  overlayBoxTextContainer: {
+    flexDirection: 'column',
     alignItems: 'flex-start',
-    fontSize: 18,
-    fontWeight: 'bold',
+    justifyContent: 'space-between',
+    gap: 20,
+    margin: screenWidth  <= 375 ? 20 : 20,
+    marginTop: screenWidth  <= 375 ? 30 : 40,
+  }, 
+  overlayTextSearch: {
+    fontSize: 22,
+    color: 'white',
+    fontFamily: 'Outfit_700Bold'
   },
-  overlayTextup: {
+  overlayTexttime: {
+    fontSize: 16,
     color: 'white',
-    marginTop: 10,
-    width: 343,
-    alignItems: 'flex-start',
-    fontSize: 15,
-    fontWeight: 'semibold',
-  },
-  overlayTextdown: {
-    color: 'white',
-    marginTop: 10,
-    width: 343,
-    alignItems: 'flex-start',
-    fontSize: 12,
-    fontWeight: 'semibold',
+    fontFamily: 'Outfit_400Regular'
   },
   overlayBox: {
     flexDirection: 'column',
@@ -296,116 +294,119 @@ const styles = StyleSheet.create({
     borderColor: 'white', // Border color
     borderStyle: 'dashed', // Dashed border style
     gap: 10,
-    width: 343,
-    height: 128,
+    width: '90%',
+    height: screenWidth  <= 375 ? 128 : 148,
+    margin: 'auto',
+    marginTop: screenWidth  <= 375 ? 40 : 60,
+    marginBottom: screenWidth  <= 375 ? 10 : 20,
   },
   overlayBoxText: {
     color: 'white',
-    marginLeft: 5,
+    fontFamily: 'Outfit_500Medium',
+    fontSize: 14,
   },
-  overlayTextContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    position: 'absolute', // Position the close icon absolutely
-    top: 120, // Adjust top spacing as needed
-    left: 20, // Adjust right spacing as needed
+  overlayBoxTextdown: {
+    marginLeft: screenWidth  <= 375 ? 20 : 20,
+  },
+  overlayTextdown: {
+    color: 'white',
+    fontFamily: 'Outfit_400Regular',
+    fontSize: 14,
+    textAlign: 'start',
   },
   mediaContainer: {
-    width: '100%',
-    height: 200,
+    width: '90%',
+    height: screenWidth  <= 375 ? 180 : 200,
     marginTop: 10,
+    margin: screenWidth  <= 375 ? 20 : 20,
   },
   video: {
     flex: 1,
-    width: 400,
+    width: '100%',
     borderRadius: 10,
-    borderWidth: .5,
+    borderWidth: 1,
     borderColor: 'white',
   },
   addMoreButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-  addMoreButtonText: {
-    color: 'white',
-    marginLeft: 5,
-  },
-  trashIconContainer: {
-    position: 'absolute',
-    top: 10, // Adjust as needed
-    right: 10, // Adjust as needed
-    zIndex: 2, // Ensure it's above the video
-    backgroundColor: '#635D5F', // Dark opacity background
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  pauseIconContainer: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-    zIndex: 2,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  pauseIconbody: {
-    zIndex: 2,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  progressBarContainer: {
-    height: 8,
-    backgroundColor: '#ccc',
-    position: 'absolute',
-    left: 30,
-    width: 340,
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)', // Use rgba for opacity
-  },
-  progressBarBackground: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    height: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)', // Use rgba for opacity
-    borderRadius: 20,
-  },
-  progressBarFill: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    height: '100%',
-    backgroundColor: 'white',
-    borderRadius: 20,
-  },
-  ctabutton: {
-    backgroundColor: '#fff',
-    padding: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginTop: 20,
-    height: 50,
-    width: 400,
-  },
-  ctaText: {
-    color: '#5303FF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  addMoreButtonPlaceholder: {
-    height: 40, 
-  },  
-  topPlaceholder: {
-    height: 70, // Adjust the height as needed
-  }
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: 10,
+},
+addMoreButtonText: {
+  color: 'white',
+  marginLeft: 5,
+},
+trashIconContainer: {
+  position: 'absolute',
+  top: 10, // Adjust as needed
+  right: 10, // Adjust as needed
+  zIndex: 2, // Ensure it's above the video
+  backgroundColor: '#635D5F', // Dark opacity background
+  width: 30,
+  height: 30,
+  borderRadius: 20,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+pauseIconContainer: {
+  position: 'absolute',
+  bottom: 10,
+  left: 10,
+  zIndex: 2,
+  justifyContent: 'center',
+  flexDirection: 'row',
+  alignItems: 'center',
+},
+pauseIconbody: {
+  zIndex: 2,
+  borderRadius: 20,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+progressBarContainer: {
+  height: 8,
+  backgroundColor: '#ccc',
+  position: 'absolute',
+  left: 30,
+  width: screenWidth <= 375 ? 290 : screenWidth === 393 ? 305 : 340,
+  borderRadius: 20,
+  backgroundColor: 'rgba(255, 255, 255, 0.3)', // Use rgba for opacity
+},
+progressBarBackground: {
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  height: '100%',
+  backgroundColor: 'rgba(255, 255, 255, 0.5)', // Use rgba for opacity
+  borderRadius: 20,
+},
+progressBarFill: {
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  height: '100%',
+  backgroundColor: 'white',
+  borderRadius: 20,
+},
+ctabutton: {
+  backgroundColor: '#fff',
+  padding: 10,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: 10,
+  marginTop: 20,
+  height: 50,
+  margin: 'auto',
+  width: '90%',
+},
+ctaText: {
+  color: '#5303FF',
+  fontSize: 16,
+  fontWeight: 'bold',
+},
+addMoreButtonPlaceholder: {
+  height: 10, 
+},  
 });

@@ -143,10 +143,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 30,
   },
-  CompanyContents: {
-    flexDirection: 'column',
-    width: screenWidth > 375 ? 363 : 343,
-  },
   CompanyAddress: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -161,7 +157,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginRight: 40,
+    marginRight: screenWidth <= 375 ? 20 : 40,
   },
   EllipseIcon: {
     marginRight: 10,
@@ -176,6 +172,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit_700Bold',
     color: 'rgba(83, 3, 255, 1)',
     marginRight: 5,
+    marginLeft: 10,
+
   },
   CompanyMoviesShowTime: {
     fontSize: 11,
@@ -199,7 +197,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: 'rgba(17, 34, 17, 0.1287)',
+    backgroundColor: 'gray',
     marginVertical: 1,
     width: '100%',
     marginBottom: 40

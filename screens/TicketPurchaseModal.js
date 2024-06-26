@@ -7,16 +7,35 @@ import Animated, {
     withRepeat,
     Easing,
 } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Linking from 'expo-linking';
 
 const TicketPurchaseModal = ({ visible, onClose, startTimer, resetSelectedTime }) => {
     const rotation = useSharedValue(0);
     const [redirecting, setRedirecting] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const config = {
         duration: 2000,
         easing: Easing.linear,
     };
+
+
+  useEffect(() => {
+    // Load dark mode state from AsyncStorage
+    const loadDarkModeState = async () => {
+      try {
+        const darkModeState = await AsyncStorage.getItem('darkModeState');
+        if (darkModeState !== null) {
+          setIsDarkMode(JSON.parse(darkModeState));
+        }
+      } catch (error) {
+        console.error('Error loading dark mode state:', error);
+      }
+    };
+
+    loadDarkModeState();
+  }, []);
 
     useEffect(() => {
         let rotationAnimation;
@@ -82,6 +101,13 @@ const TicketPurchaseModal = ({ visible, onClose, startTimer, resetSelectedTime }
         );
     });
 
+
+  const centeredViewStyle = isDarkMode ? [styles.centeredView, styles.darkcenteredView] : styles.centeredView;
+  const modalViewStyle = isDarkMode ? [styles.modalView, styles.darkmodalView] : styles.modalView;
+  const textStyle = isDarkMode ? styles.textDark : styles.modalText;
+  const textStyle2 = isDarkMode ? styles.textDark2 : styles.modalText2;
+  const specialTextStyle = isDarkMode ? styles.darkspecialText : styles.specialText;
+
     return (
         <Modal
             animationType="fade"
@@ -89,11 +115,11 @@ const TicketPurchaseModal = ({ visible, onClose, startTimer, resetSelectedTime }
             visible={visible}
             onRequestClose={onClose}
         >
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Ticket Purchase Redirect</Text>
+            <View style={centeredViewStyle}>
+                <View style={modalViewStyle}>
+                    <Text style={textStyle}>Ticket Purchase Redirect</Text>
                     <View style={styles.separator} />
-                    <Text style={styles.modalText2}>Swing is redirecting you to{' '}<Text style={styles.specialText}>SILVERBIRD ENTERTAINMENT CENTER</Text> website to complete your ticket purchase.</Text>
+                    <Text style={textStyle2}>Swing is redirecting you to{' '}<Text style={specialTextStyle}>SILVERBIRD ENTERTAINMENT CENTER</Text> website to complete your ticket purchase.</Text>
                     <View style={styles.spinnercontainer}>
                         <View style={styles.spinner}>{circles}</View>
                     </View>
@@ -116,33 +142,67 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.5)',
     },
+    darkcenteredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)', // Light white background with some opacity
+    },
     modalView: {
         backgroundColor: 'white',
         borderRadius: 20,
-        padding: 20,
         alignItems: 'center',
         width: '80%',
-        elevation: 5,
+    },
+    textDark: {
+        color: '#fff',
+        textAlign: 'center',
+        fontFamily: 'Outfit_600SemiBold',
+        fontSize: 22,
+        padding: 10,
+    },
+    darkmodalView: {
+        backgroundColor: 'rgba(23,25,28,255)',
+        borderRadius: 20,
+        alignItems: 'center',
+        width: '80%',
     },
     modalText: {
         textAlign: 'center',
         fontFamily: 'Outfit_600SemiBold',
-        fontSize: 22
+        fontSize: 22,
+        padding: 10,
     },
     modalText2: {
         marginBottom: 20,
         textAlign: 'center',
         fontFamily: 'Outfit_400Regular',
         fontSize: 16,
+        padding: 10,
+    },
+    textDark2: {
+        marginBottom: 20,
+        textAlign: 'center',
+        fontFamily: 'Outfit_400Regular',
+        fontSize: 16,
+        padding: 10,
+        color: '#fff'
     },
     specialText: {
         textAlign: 'center',
         fontFamily: 'Outfit_600SemiBold',
         fontSize: 16,
-        color: 'rgba(71, 84, 103, 1)'
+        color: 'rgba(71, 84, 103, 1)',
+    },
+    darkspecialText: {
+        textAlign: 'center',
+        fontFamily: 'Outfit_600SemiBold',
+        fontSize: 16,
+        color: '##D9D9D9',
+
     },
     separator: {
-        width: 343,
+        width: '100%',
         height: 1,
         backgroundColor: '#ccc',
         marginVertical: 10,
@@ -150,10 +210,12 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        padding: 15,
+        marginBottom: 10,
     },
     cancelButton: {
         backgroundColor: '#fff',
-        width: 311,
+        width: '100%',
         height: 44,
         borderRadius: 5,
         borderColor: 'rgba(208, 213, 221, 1)',

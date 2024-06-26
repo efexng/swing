@@ -139,14 +139,14 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   separator: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'gray',
     width: '100%',
     alignSelf: 'center',
   },
   separator2: {
-    borderBottomWidth: 0.8,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'gray',
     width: screenWidth > 375 ? 261 : 241,
     alignSelf: 'center',
     marginTop: 15

@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   separator: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'rgba(17, 34, 17, 0.1287)',
     width: '100%',
     alignSelf: 'center',
   },
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   contactInfo: {
     margin: 20,
-    width: screenWidth > 375 ? 383 : 343,
+    width: '90%',
     height: 138,
     justifyContent: 'center',
     backgroundColor: 'white',
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   socialMedia: {
     margin: 20,
     marginBottom: 32,
-    width: screenWidth > 375 ? 383 : 343,
+    width: '90%',
     backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

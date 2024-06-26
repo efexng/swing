@@ -132,10 +132,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 30,
       },
-      CompanyContents: {
-        flexDirection: 'column',
-        width: screenWidth > 375 ? 363 : 343,
-      },
       CompanyAddress: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -294,7 +290,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
       },
       movieImage: {
-        width: 165,
+        width: '100%',
         height: 200,
         borderRadius: 10,
       },
@@ -315,25 +311,6 @@ const styles = StyleSheet.create({
       moviesList: {
         paddingVertical: 20,
         alignItems: 'flex-start', 
-      },
-      moviescontainer: {
-        width: screenWidth > 375 ? 363 : 343,
-      },
-      moviesbtncontainer: {
-        alignItems: 'center',
-      },
-      moviesbtn: {
-        backgroundColor: '#5303FF',
-        width: 94,
-        height: 48,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 10,
-      },
-      moviesbtntxt: {
-        color: '#fff',
-        fontSize: 14,
-        fontFamily: 'Outfit_500Medium'
       },
       textDark: {
         color: '#fff'

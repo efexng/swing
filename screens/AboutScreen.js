@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   separator: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'gray',
     width: '100%',
     alignSelf: 'center',
   },
   separator2: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'gray',
     width: '100%',
     alignSelf: 'center',
     marginTop: 20,

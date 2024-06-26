@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Dimensions, Image, ScrollView } from 'react-native';
-import { BackIcon, ArrowRightIcon3, ArrowRightIcon4 } from './icons';
+import { BackIcon, BackIconWhite,ArrowRightIcon3, ArrowRightIcon4 } from './icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import TicketPurchaseModal from './TicketPurchaseModal';
 
@@ -19,6 +20,7 @@ const MovieShowTime = () => {
     const route = useRoute();
     const { image, title, about, releasedate, movietime, genre } = route.params;
     const [selectedTime, setSelectedTime] = useState(null);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const isTimeSelected = (date, time) => selectedTime && selectedTime.date === date && selectedTime.time === time;
     const resetSelectedTime = () => {
@@ -41,11 +43,37 @@ const MovieShowTime = () => {
         setStartTimer(isModalVisible); // Set startTimer based on modal visibility
     };
 
+    useEffect(() => {
+        // Load dark mode state from AsyncStorage
+        const loadDarkModeState = async () => {
+          try {
+            const darkModeState = await AsyncStorage.getItem('darkModeState');
+            if (darkModeState !== null) {
+              setIsDarkMode(JSON.parse(darkModeState));
+            }
+          } catch (error) {
+            console.error('Error loading dark mode state:', error);
+          }
+        };
+    
+        loadDarkModeState();
+      }, []);
+
+
+    const containerStyle = isDarkMode ? [styles.container, styles.darkContainer] : styles.container;
+    const buyButtonStyle = isDarkMode ? [styles.buyButton, styles.darkbuyButton] : styles.buyButton;
+    const textStyle = isDarkMode ? [styles.Moviename, styles.darkMoviename] : styles.Moviename;
+    const textStyl2 = isDarkMode ? [styles.Movieabout, styles.darkMovieabout] : styles.Movieabout;
+    const textStyl3 = isDarkMode ? [styles.MovieInfoContenttxt, styles.darkMovieInfoContenttxt] : styles.MovieInfoContenttxt;
+    const textStyl4 = isDarkMode ? [styles.movieshowingtimetxt, styles.darkmovieshowingtimetxt] : styles.movieshowingtimetxt;
+    const textStyl5 = isDarkMode ? [styles.dateText, styles.darkdateText] : styles.dateText;
+    const textStyl6 = isDarkMode ? [styles.timeText, styles.darktimeText] : styles.timeText;
+
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={containerStyle}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <BackIcon />
+                    {isDarkMode ? <BackIconWhite/> : <BackIcon />}
                 </TouchableOpacity>
             </View>
             <View style={styles.separator} />
@@ -54,25 +82,25 @@ const MovieShowTime = () => {
                     <Image source={image} style={styles.image} />
                 </View>
                 <View style={styles.MovieInfo}>
-                    <Text style={styles.Moviename}>{title}</Text>
-                    <Text style={styles.Movieabout}>{about}</Text>
+                    <Text style={textStyle}>{title}</Text>
+                    <Text style={textStyl2}>{about}</Text>
                 </View>
                 <View style={styles.MovieInfoContent}>
-                    <Text style={styles.MovieInfoContenttxt}>{releasedate}</Text>
-                    <Ionicons name='ellipse' size={5} />
-                    <Text style={styles.MovieInfoContenttxt}>{movietime}</Text>
-                    <Ionicons name='ellipse' size={5} />
-                    <Text style={styles.MovieInfoContenttxt}>{genre}</Text>
+                    <Text style={textStyl3}>{releasedate}</Text>
+                    <Ionicons name='ellipse' size={5} color={isDarkMode ? '#fff' : '#000'} />
+                    <Text style={textStyl3}>{movietime}</Text>
+                    <Ionicons name='ellipse' size={5} color={isDarkMode ? '#fff' : '#000'} />
+                    <Text style={textStyl3}>{genre}</Text>
                 </View>
                 <View style={styles.bottomseparator} />
                 <View style={styles.movieshowingtime}>
-                    <Text style={styles.movieshowingtimetxt}>
+                    <Text style={textStyl4}>
                         Movie Times
                     </Text>
                     <View>
                         {genreData.map((item) => (
                             <View key={item.id} style={styles.dateContainer}>
-                                <Text style={styles.dateText}>{item.date}</Text>
+                                <Text style={textStyl5}>{item.date}</Text>
                                 <View style={styles.timeRow}>
                                     {item.times.map((time, index) => (
                                         <TouchableOpacity
@@ -83,7 +111,7 @@ const MovieShowTime = () => {
                                             ]}
                                             onPress={() => toggleTime(item.date, time)}
                                         >
-                                            <Text style={[styles.timeText, isTimeSelected(item.date, time) && styles.selectedTimeText]}>
+                                            <Text style={[textStyl6, isTimeSelected(item.date, time) && styles.selectedTimeText]}>
                                                 {time}
                                             </Text>
                                         </TouchableOpacity>
@@ -96,7 +124,7 @@ const MovieShowTime = () => {
                 <View style={styles.buttonContainer}>
                    <TouchableOpacity
                 style={[
-                    styles.buyButton,
+                    buyButtonStyle,
                     selectedTime && styles.activeBuyButton,
                 ]}
                 disabled={!selectedTime}
@@ -126,6 +154,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F5F5F5',
     },
+    darkContainer: {
+        flex: 1,
+        backgroundColor: 'rgba(23,25,28,255)',
+    },
     header: {
         flexDirection: 'row',
         margin: 20,
@@ -134,8 +166,8 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     separator: {
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'gray',
+        height: 1,
+        backgroundColor: 'gray',
         width: '100%',
         alignSelf: 'center',
     },
@@ -219,6 +251,7 @@ const styles = StyleSheet.create({
     },
     selectedTime: {
         backgroundColor: '#5303FF',
+        borderWidth: 0,
     },
     selectedTimeText: {
         color: '#fff',
@@ -230,7 +263,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     buyButton: {
-        width: screenWidth > 375 ? 363 : 343,
+        width: '90%',
         height: 48,
         flexDirection: 'row',
         alignItems: 'center',
@@ -241,7 +274,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5F5F5',
         paddingRight: 12, // Add paddingRight to create space for the icon
     },
-    
     activeBuyButton: {
         borderColor: '#5303FF',
         backgroundColor: '#5303FF',
@@ -262,5 +294,26 @@ const styles = StyleSheet.create({
     movieshowingtimetxt: {
         fontSize: 20,
         fontFamily: 'Outfit_600SemiBold',
+    },
+    darkMoviename: {
+        color: '#fff',
+    },
+    darkMovieabout: {
+        color: '#fff',
+    },
+    darkMovieInfoContenttxt: {
+        color: '#fff',
+    },
+    darkmovieshowingtimetxt: {
+        color: '#fff',
+    },
+    darkdateText: {
+        color: '#fff',
+    },
+    darktimeText: {
+        color: '#fff',
+    },
+    darkbuyButton :{
+        backgroundColor: '#39393B',
     }
 });

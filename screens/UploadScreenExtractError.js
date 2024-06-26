@@ -18,7 +18,7 @@ const UploadScreenExtractError = () => {
 
       <View style={styles.error}>
         <Text style={styles.errorText}>Oops</Text>
-        <Text style={styles.errorText}>Nothing has been added</Text>
+        <Text style={styles.errorText2}>Nothing has been added</Text>
         <TouchableOpacity onPress={() => navigation.navigate('UploadScreenExtract')} style={styles.ctabutton}>
               <Text style={styles.ctaText}>Try Again</Text>
             </TouchableOpacity>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
       ctaText: {
         color: '#5303FF',
         fontSize: 16,
+        fontFamily: 'Outfit_500Medium' 
       },
       closeIcon: {
         position: 'absolute',
@@ -73,7 +74,14 @@ const styles = StyleSheet.create({
       },
       errorText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 22,
+        fontFamily: 'Outfit_600SemiBold',
         marginTop: 10,
       },
+      errorText2:{
+        color: 'white',
+        fontSize: 16,
+        fontFamily: 'Outfit_400Regular',
+        marginTop: 10,
+      }
     });

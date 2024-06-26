@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CinemaIcon, HomeIconNF, SavedIconFill, MoreIcon, SearchIcon,SearchIconWhite, EllipseVerticalSavedIcon, ModalShareIcon, ModalFlagIcon, TrashIcon, CinemaIconWhite, HomeIconWhite, MoreIconFillWhite, ModalFlagIconWhite, ModalShareIconWhite } from './icons';
 import { useNavigation } from '@react-navigation/native';
 
-//to do// image width----
+
 
 const Movies = [
   {
@@ -24,7 +24,7 @@ const Movies = [
   },
   {
     id: 3,
-    image: require('../assets/Match2.png'),
+    image: require('../assets/houseofdragon.png'),
     title: 'House of the Dragon',
     Realeasedate: '2023',
     type: 'Show',
@@ -321,8 +321,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   separator: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'rgba(17, 34, 17, 0.1287)',
     width: '100%',
     alignSelf: 'center',
   },
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 50,
+    marginBottom: screenWidth <= 375 ? 10 : 40,
   },
   iconText: {
     color: '#17161A',
@@ -438,23 +438,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     color: '#5303FF',
   },
-  movieItem: {
-    width: '48%',
-    alignItems: 'center',
-    position: 'relative',
-    marginBottom: 10,
-    marginTop: 10,
-  },
   iconEllipse: {
     position: 'absolute',
     top: 10,
     right: 5,
     zIndex: 1,
   },
+  moviesList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 40,
+  },
+  movieItem: {
+    width: '48%',
+    marginBottom: 10,
+  },
   movieImage: {
-    width: screenWidth > 375 ? 163 : 193,
-    height: 210,
+    width: '100%',
+    height: screenWidth * 0.66 * (3 / 4), // 90% of the screen width, maintaining a 3:4 aspect ratio
     borderRadius: 10,
+    objectFit: 'cover'
   },
   movieTitle: {
     marginTop: 5,
@@ -469,12 +473,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit_400Regular',
     textAlign: 'center',
   },
-  moviesList: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingHorizontal: 40,
-  },
   modalContainer: {
     position: 'absolute',
     top: 0,
@@ -486,7 +484,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: 'rgba(245, 245, 245, 1)',
-    width: screenWidth > 375 ? 233 : 211,
+    width: '60%',
     height: 180,
     borderRadius: 10,
     borderWidth: 1,
@@ -497,7 +495,7 @@ const styles = StyleSheet.create({
   },
   darkmodalContent: {
     backgroundColor: '#222225',
-    width: screenWidth > 375 ? 233 : 211,
+    width: '60%',
     height: 180,
     borderRadius: 10,
     borderWidth: 1,
@@ -519,9 +517,10 @@ const styles = StyleSheet.create({
     color: 'rgba(60, 60, 67, 1)',
   },
   emptyContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    bottom: '20%',
+    margin: 'auto'
   },
   oopsText: {
     fontSize: 22,

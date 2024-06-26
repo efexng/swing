@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5F5F5',
     },
     darkContainer: {
+        flex: 1,
         backgroundColor: 'rgba(23,25,28,255)',
       },
     header: {
@@ -163,14 +164,14 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     separator: {
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'gray',
+        height: 1,
+        backgroundColor: 'gray',
         width: '100%',
         alignSelf: 'center',
     },
     bottomseparator: {
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'gray',
+        height: 1,
+        backgroundColor: 'gray',
         width: '100%',
         alignSelf: 'center',
         marginTop: 10,
@@ -299,7 +300,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     moviescontainer: {
-        width: screenWidth > 375 ? 363 : 343,
+        width: screenWidth  <= 375 ? 343 : 363,
     },
     moviesbtncontainer: {
         alignItems: 'center',

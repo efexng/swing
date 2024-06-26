@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Linking, Dimensions } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BackIconWhite, BackIcon } from './icons';
 import { useNavigation } from '@react-navigation/native';
@@ -63,7 +63,8 @@ const FAQScreen = () => {
         <Text style={[styles.ContactUsText, textStyle]}>FAQ</Text>
       </View>
       <View style={styles.separator} />
-      <View style={styles.contents}>
+    <ScrollView>
+    <View style={styles.contents}>
       {FAQ.map((item, index) => (
         <View key={item.id}>
           <View style={styles.titleContainer}>
@@ -81,6 +82,7 @@ const FAQScreen = () => {
         </View>
           ))}
       </View>
+    </ScrollView>
     </SafeAreaView>
   );
 };
@@ -116,14 +118,14 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   separator: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'gray',
     width: '100%',
     alignSelf: 'center',
   },
   separator2: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
+    height: 1,
+    backgroundColor: 'gray',
     width: '100%',
     alignSelf: 'center',
     marginTop: 20,
@@ -135,14 +137,12 @@ const styles = StyleSheet.create({
   },
   contentstxt1: {
     fontSize: 16,
-    width: screenWidth > 375 ? 383 : 343,
     fontFamily: 'Outfit_600SemiBold',
     marginBottom: 5,
     marginLeft: 8,
   },
   contentstxt2: {
     fontSize: 14,
-    width: screenWidth > 375 ? 383 : 343,
     fontFamily: 'Outfit_400Regular',
     marginBottom: 10,
     marginTop: 10,
