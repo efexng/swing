@@ -1,18 +1,25 @@
 import { StyleSheet, Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
-const videoContainerHeight = windowHeight * 0.85; // Calculate 80% of the window height
+
+
+const { width, height } = Dimensions.get('window');
+const ITEM_HEIGHT = height * 0.85; // 80% of the screen height
+const BOTTOM_PADDING = 10;
+
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center', 
-    justifyContent: 'center', 
     backgroundColor: 'gray',
   },
+
+  contentContainer: {
+    paddingBottom: BOTTOM_PADDING, // Ensure the list ends with padding
+  },
   bottomContainer: {
+    position: 'absolute',
+    bottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -37,19 +44,28 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 16.8
   },
+  separator: {
+    height: 10,
+    backgroundColor: 'red', 
+    zIndex:1,
+
+  },
+  contentContainer: {
+    paddingBottom: BOTTOM_PADDING,
+  },
   videoContainer: {
-    backgroundColor: 'black',
-    width: windowWidth,
-    height: videoContainerHeight, // Use the calculated 80% height
+    width: width,
+    height: ITEM_HEIGHT,
+    marginBottom: BOTTOM_PADDING,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'black',
     borderRadius: 10,
-    marginBottom: screenWidth <= 375 ? 20 : screenWidth === 393 ? 15 : 20,
-    marginTop: screenWidth <= 375 ? -7 : 0,
+    alignSelf: 'center',
   },
   video: {
-   height: '80%',
-   width: '100%',
+    width: '100%',
+    height: '80%', // Adjust height as needed
   },
   videodetails: {
     position: 'absolute',
@@ -77,7 +93,7 @@ const styles = StyleSheet.create({
     lineHeight: 19.2,
   },
   videoScrollView: {
-    width: '100%',
+    flex: 1,
   },
   videocontrols: {
     position: 'absolute',

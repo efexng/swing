@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, TouchableOpacity, Modal, ScrollView, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, Modal, FlatList, Dimensions } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
 import styles from './HomeScreenStyle';
-import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon, ModalSaveIcon,ModalShareIcon, ModalFlagIcon, ModalStopIcon, EllipseVerticalHomeIcon } from './icons';
+import { CinemaIcon, HomeIcon, SavedIcon, MoreIcon, HeartIcon, TinyCircleIcon, HeartFillIcon, VolumeIcon, VolumeSlashIcon, ModalSaveIcon, ModalShareIcon, ModalFlagIcon, ModalStopIcon, EllipseVerticalHomeIcon } from './icons';
 import { useFonts, Outfit_100Thin, Outfit_200ExtraLight, Outfit_300Light, Outfit_400Regular, Outfit_500Medium, Outfit_600SemiBold, Outfit_700Bold, Outfit_800ExtraBold, Outfit_900Black } from '@expo-google-fonts/outfit';
 
 
-const screenWidth = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window');
+const ITEM_HEIGHT = height * 0.85; // 80% of the screen height
+const BOTTOM_PADDING = 10;
+
 
 const videoData = [
   {
@@ -158,33 +161,9 @@ export default function HomeScreen() {
       return () => setFocused(false); // Clean up on blur
     }, [scrollViewRef]) // Add scrollViewRef to the dependency array
   );
-  
 
-  const handleScroll = (event) => {
-    const contentOffsetY = event.nativeEvent.contentOffset.y;
-    const index = Math.round(contentOffsetY / 790);
 
-    // If the index is different from the last played index, replay the video
-    if (index !== lastPlayedIndex && focused) {
-      videos.current.forEach((video, idx) => {
-        if (video) {
-          if (idx === index) {
-            video.replayAsync(); // Use replayAsync to replay the video
-            setLastPlayedIndex(index); // Update the last played index
-          } else {
-            video.pauseAsync();
-          }
-        }
-      });
-    }
 
-    // Check if the user has scrolled to the bottom of the list
-    const paddingToBottom = 20;
-    if (contentOffsetY + event.nativeEvent.layoutMeasurement.height + paddingToBottom >= event.nativeEvent.contentSize.height) {
-      // Append more videos to the video list
-      setVideoList((prevList) => [...prevList, ...videoData]);
-    }
-  };
 
 
   const togglePlayback = async (index) => {
@@ -220,7 +199,7 @@ export default function HomeScreen() {
       return acc;
     }, {})
   );
-  
+
 
   // Toggle like for a specific video ID
   const toggleLike = (videoId) => {
@@ -266,77 +245,32 @@ export default function HomeScreen() {
     setIsModalVisible(!isModalVisible);
   };
 
-  let [fontsLoaded] = useFonts({
-    Outfit_100Thin,
-    Outfit_200ExtraLight,
-    Outfit_300Light,
-    Outfit_400Regular,
-    Outfit_500Medium,
-    Outfit_600SemiBold,
-    Outfit_700Bold,
-    Outfit_800ExtraBold,
-    Outfit_900Black,
-  });
-
-  if (!fontsLoaded) {
-    return null; 
-  } else {
+  const DATA = Array.from({ length: 100 }).flatMap((_, iterationIndex) =>
+  videoData.map(video => ({
+    id: video.id + (iterationIndex * videoData.length), // Unique ID combining video ID and iteration index
+    videoUrl: video.source, // Assuming video.source is used for videoUrl
+    title: video.title,
+    description: video.description,
+    header: video.header, // Include header if needed
+  }))
+);
 
   return (
     <View style={styles.container}>
 
-      <View style={styles.headercontainer}>
-        <Text style={styles.headertitle}>What's Coming</Text>
-        <ScrollView horizontal={true} style={styles.headerScrollView} showsHorizontalScrollIndicator={false} >
-        {['Cinema', 'Netflix', 'HBO', 'Disney +', 'Showmax', 'Apple Tv'].map(headerText => (
-          <TouchableOpacity
-            key={headerText}
-            style={[
-              styles.headercontents,
-              activeHeader === headerText && styles.activeHeader,
-            ]}
-            onPress={() => {
-              setActiveHeader(headerText); // Set the activeHeader when a header is pressed
-            }}
-          >
-            <Text style={[styles.headerText, { color: '#fff' }]}>{headerText.toUpperCase()}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      </View>
-
-
-
-     <TouchableOpacity style={styles.notificationContainer} onPress={() => navigation.navigate('NotificationScreen')}>
-     <View style={styles.notification}>
-        <View style={styles.notificationtinyCircle} />
-        <Ionicons name="notifications-outline" size={24} color="#17161A" />
-      </View>
-     </TouchableOpacity>
-
-
-
-     <ScrollView
-        ref={scrollViewRef}
-        style={styles.videoScrollView}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={25}
-        pagingEnabled
-        onScroll={handleScroll}
-      >
-       {videoList
-  .filter((item) => item.header === activeHeader) // Filter videos based on activeHeader
-  .map((item, index) => (
-    <View key={`${item.id}-${index}`} style={styles.videoContainer}>
+<FlatList
+  data={DATA}
+  renderItem={({ item, index }) => (
+    <View key={item.id} style={styles.videoContainer}>
       <Video
-        ref={(ref) => (videos.current[index] = ref)}
+        ref={(ref) => (videos.current[item.id] = ref)}
         style={styles.video}
-        source={{ uri: item.source }}
+        source={{ uri: item.videoUrl }}
         useNativeControls
         resizeMode={ResizeMode.COVER}
         isLooping
-        isMuted={videoStates[item.id] && videoStates[item.id].isMuted} // Use individual isMuted state for each video
-        onPlaybackStatusUpdate={() => {}}
+        isMuted={videoStates[item.id] && videoStates[item.id].isMuted}
+        onPlaybackStatusUpdate={() => { }}
       />
       <ProgressBar progress={progresses[index]} />
       <View style={styles.controlsContainer}>
@@ -348,7 +282,7 @@ export default function HomeScreen() {
             alignItems: 'center',
           }}
           title={'Play'}
-          onPress={() => togglePlayback(index)}
+          onPress={() => togglePlayback(item.id)}
         />
       </View>
       <View style={styles.videodetails}>
@@ -358,6 +292,7 @@ export default function HomeScreen() {
       <View style={styles.videocontrols}>
         <TouchableOpacity onPress={() => toggleLike(item.id)}>
           {videoStates[item.id]?.isLiked ? <HeartFillIcon /> : <HeartIcon />}
+          {/* Assuming likeCount is correctly mapped */}
           {likeCount[item.id] > 0 && (
             <Text style={styles.likeCountText}>{formatLikeCount(likeCount[item.id])}</Text>
           )}
@@ -370,48 +305,14 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
     </View>
-  ))}
-
-      </ScrollView>
-
-
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}
-      >
-        <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPress={toggleModal}>
-        </TouchableOpacity>
-        <View style={styles.modalContent}>
-          <TouchableOpacity style={styles.modalOption}>
-            <ModalSaveIcon />
-            <Text style={styles.modalOptionText}>Add Trailer to Library</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.modalOption}>
-          <ModalShareIcon />
-            <Text style={styles.modalOptionText}>Share</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.modalOption}>
-          <ModalFlagIcon />
-            <Text style={styles.modalOptionText}>Report</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.modalOption}>
-          <ModalStopIcon />
-            <Text style={[styles.modalOptionText, { color: 'red' }]}>Not Interested</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-
-      <TouchableOpacity style={styles.outerCirclecontainer} onPress={() => navigation.navigate('UploadScreen')}>
-      <View style={styles.outerCircle}>
-        <View style={styles.innerCircle}>
-        <View style={styles.tinyCircle}>
-      <TinyCircleIcon />
-    </View>
-          </View>
-      </View>
-    </TouchableOpacity>
-
+  )}
+  contentContainerStyle={styles.contentContainer}
+  keyExtractor={(item) => item.id.toString()} // Ensure unique key
+  pagingEnabled
+  showsVerticalScrollIndicator={false}
+  snapToInterval={ITEM_HEIGHT + BOTTOM_PADDING}
+  decelerationRate="fast"
+/>
 
 
 
@@ -421,19 +322,18 @@ export default function HomeScreen() {
           <Text style={styles.iconTextHome}>Home</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('CinemaScreen')} style={styles.iconContainer}>
-        <CinemaIcon />
+          <CinemaIcon />
           <Text style={styles.iconText}>Cinema</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('SavedScreen')} style={styles.iconContainer}>
-         <SavedIcon />
+          <SavedIcon />
           <Text style={styles.iconText}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('MoreScreen')} style={styles.iconContainer}>
-        <MoreIcon />
+          <MoreIcon />
           <Text style={styles.iconText}>More</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
 }
