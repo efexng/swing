@@ -4,7 +4,7 @@ const screenWidth = Dimensions.get('window').width;
 
 const { width, height } = Dimensions.get('window');
 const ITEM_HEIGHT = height * 0.85; // 80% of the screen height
-const BOTTOM_PADDING = 10;
+const BOTTOM_PADDING = 20;
 
 
 
@@ -12,14 +12,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'gray',
+    position: 'relative', // Ensure correct stacking order
   },
-
-  contentContainer: {
-    paddingBottom: BOTTOM_PADDING, // Ensure the list ends with padding
+  blackOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '10%',
+    backgroundColor: 'black',
   },
   bottomContainer: {
-    position: 'absolute',
-    bottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
     marginBottom: screenWidth <= 375 ? 10 : 40,
   },
   iconText: {
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
   },
   video: {
     width: '100%',
-    height: '80%', // Adjust height as needed
+    height: '90%', // Adjust height as needed
   },
   videodetails: {
     position: 'absolute',
