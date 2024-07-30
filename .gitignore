@@ -36,3 +36,6 @@ yarn-error.*
 
 Svg
 
+google-cloud-sdk
+
+.env
